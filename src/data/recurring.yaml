@@ -1,0 +1,18 @@
+# Weekly group runs. Each one shows up on the calendar for the next 6 weeks.
+# Use `starts` / `ends` (YYYY-MM-DD) for seasonal runs.
+
+- id: mill-city-highland-monday
+  name: Monday Night in Highland
+  weekday: Mon
+  start_time: "18:00"
+  type: group-run
+  distances: [2–7 mi]
+  venue: 767 Cleveland Ave S (Mill City Running Highland)
+  city: St. Paul
+  host: Mill City Running
+  url: https://www.millcityrunning.com/pages/group-runs
+  description: >-
+    Everyone starts together for about a mile, then splits into pace groups from sub-7
+    to 13+ min/mile, plus a walking group. Routes alternate weekly (Team Northbound vs.
+    Team Southbound). Sign the waiver before your first run.
+  added: 2026-10-23

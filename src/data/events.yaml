@@ -1,50 +1,17 @@
-# One entry per event. `id` must be unique: use date + short slug.
+# One-off events (races, special runs). `id` must be unique: use date + short slug.
 # Dates/times are local Twin Cities time. Omit start_time for all-day events.
 # type: race | group-run | social | trail
-# SAMPLE DATA: replace with the real list from the Instagram post.
-
-- id: 2026-10-24-sample-lake-loop
-  name: "Sample: Saturday Lake Loop"
-  date: 2026-10-24
-  start_time: "08:00"
-  type: group-run
-  distances: [5K, 10K]
-  venue: Bde Maka Ska
-  city: Minneapolis
-  host: Sample Run Club
-  description: No-drop group run, all paces welcome.
-  added: 2026-10-23
-
-- id: 2026-10-29-sample-brewery-run
-  name: "Sample: Thursday Brewery Run"
-  date: 2026-10-29
-  start_time: "18:30"
-  type: social
-  distances: [5K]
-  venue: Sample Brewing Co.
-  city: St. Paul
-  host: Sample Run Club
-  added: 2026-10-23
-
-- id: 2026-11-26-sample-turkey-trot
-  name: "Sample: Thanksgiving Turkey Trot"
-  date: 2026-11-26
-  start_time: "08:00"
-  type: race
-  distances: [5K, 10K]
-  venue: Lake Nokomis
-  city: Minneapolis
-  host: Sample Events
-  price: "$40"
-  url: https://example.com/register
-  added: 2026-10-22
-
-- id: 2026-12-05-sample-trail-run
-  name: "Sample: Snowy River Trail Run"
-  date: 2026-12-05
-  type: trail
-  distances: [10K, Half]
-  venue: Fort Snelling State Park
-  host: Sample Trail Runners
-  price: "$55"
-  added: 2026-10-20
+#
+# - id: 2026-11-26-turkey-trot
+#   name: Turkey Trot
+#   date: 2026-11-26
+#   start_time: "08:00"
+#   type: race
+#   distances: [5K, 10K]
+#   venue: Lake Nokomis
+#   city: Minneapolis
+#   host: Some Running Club
+#   url: https://example.com/register
+#   price: "$40"
+#   added: 2026-10-23
+[]

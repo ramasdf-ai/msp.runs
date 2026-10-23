@@ -1,14 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
-import { fmtLongDay, fmtTime } from '../../lib/events';
+import { allEvents, fmtLongDay, fmtTime } from '../../lib/events';
 import { TYPE_LABEL, url } from '../../lib/site';
 
 export async function getStaticPaths() {
-  return (await getCollection('events')).map((event) => ({ params: { id: event.id }, props: { event } }));
+  return (await allEvents()).map((event) => ({ params: { id: event.id }, props: { event } }));
 }
 
-const { event } = Astro.props;
+const { event } = Astro.props as { event: import('../../lib/events').Event };
 const e = event.data;
 const place = [e.venue, e.city].filter(Boolean).join(', ');
 const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place + ', MN')}`;
@@ -20,6 +19,7 @@ const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
   <dl>
     <dt>When</dt><dd class="mono">{fmtLongDay(e.date)} · {fmtTime(e.start_time)}</dd>
     <dt>Where</dt><dd><a href={mapUrl} target="_blank" rel="noopener">{place}</a></dd>
+    {event.series && (<><dt>Repeats</dt><dd>Every week</dd></>)}
     <dt>Type</dt><dd><span class="chip">{TYPE_LABEL[e.type]}</span></dd>
     {e.distances.length > 0 && (<><dt>Distances</dt><dd>{e.distances.join(' / ')}</dd></>)}
     {e.price && (<><dt>Cost</dt><dd>{e.price}</dd></>)}

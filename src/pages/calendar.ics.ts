@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { getCollection } from 'astro:content';
+import { allEvents } from '../lib/events';
 
 // Escape per RFC 5545 and fold lines at 75 octets (approximated as chars).
 const esc = (s: string) => s.replace(/[\;,]/g, (c) => '\\' + c).replace(/\n/g, '\\n');
@@ -13,7 +13,7 @@ function nextDay(d: string) {
 }
 
 export const GET: APIRoute = async ({ site }) => {
-  const events = await getCollection('events');
+  const events = await allEvents();
   const stamp = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z';
   const lines = [
     'BEGIN:VCALENDAR',

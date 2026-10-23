@@ -1,4 +1,23 @@
-# Local clubs, run groups, and shops. Add `url` when you have it.
+# Local clubs, run groups, and shops.
+- id: mill-city-running
+  name: Mill City Running
+  url: https://www.millcityrunning.com/pages/group-runs
+  blurb: Running shop (Northeast Minneapolis and Highland St. Paul) with group runs Monday, Tuesday, Friday, and some Saturdays.
+- id: mpls-run-club
+  name: Mpls Run Club
+  url: https://www.instagram.com/mplsrunclub
+  blurb: Social Wednesday runs (6:30 AM and 6 PM) at rotating neighborhood spots, spring through fall.
+- id: run-minnesota
+  name: Run Minnesota
+  url: https://train.run-minnesota.org/page/show
+  blurb: Training programs and group runs.
+- id: dirt-folk-trail
+  name: Dirt Folk Trail
+  url: https://www.strava.com/clubs/2280336
+  blurb: Minneapolis trail running crew.
+- id: tierra-rec-club
+  name: Tierra Rec Club
+  url: https://www.instagram.com/tierra.recclub/
 - id: twin-cities-in-motion
   name: Twin Cities in Motion
   blurb: Organizers of the Twin Cities Marathon weekend.

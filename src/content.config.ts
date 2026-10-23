@@ -25,6 +25,26 @@ const events = defineCollection({
   }),
 });
 
+// Weekly group runs, expanded into dated events for the next few weeks at build time.
+const recurring = defineCollection({
+  loader: file('src/data/recurring.yaml'),
+  schema: z.object({
+    name: z.string(),
+    weekday: z.enum(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']),
+    start_time: z.string(),
+    type: z.enum(['race', 'group-run', 'social', 'trail']).default('group-run'),
+    distances: z.array(z.string()).default([]),
+    venue: z.string(),
+    city: z.string().optional(),
+    host: z.string(),
+    url: z.string().url().optional(),
+    description: z.string().optional(),
+    starts: isoDate.optional(), // first date it runs (season start)
+    ends: isoDate.optional(), // last date it runs (season end)
+    added: isoDate,
+  }),
+});
+
 const groups = defineCollection({
   loader: file('src/data/groups.yaml'),
   schema: z.object({
@@ -34,4 +54,4 @@ const groups = defineCollection({
   }),
 });
 
-export const collections = { events, groups };
+export const collections = { events, recurring, groups };
