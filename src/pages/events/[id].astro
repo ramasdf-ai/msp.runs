@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { fmtLongDay, fmtTime } from '../../lib/events';
+import { TYPE_LABEL, url } from '../../lib/site';
+
+export async function getStaticPaths() {
+  return (await getCollection('events')).map((event) => ({ params: { id: event.id }, props: { event } }));
+}
+
+const { event } = Astro.props;
+const e = event.data;
+const place = [e.venue, e.city].filter(Boolean).join(', ');
+const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place + ', MN')}`;
+---
+<Base title={e.name} description={`${fmtLongDay(e.date)} at ${place}. Hosted by ${e.host}.`}>
+  <p class="muted"><a href={url('events')}>← All events</a></p>
+  <p class="host muted">{e.host}</p>
+  <h1>{e.name}</h1>
+  <dl>
+    <dt>When</dt><dd class="mono">{fmtLongDay(e.date)} · {fmtTime(e.start_time)}</dd>
+    <dt>Where</dt><dd><a href={mapUrl} target="_blank" rel="noopener">{place}</a></dd>
+    <dt>Type</dt><dd><span class="chip">{TYPE_LABEL[e.type]}</span></dd>
+    {e.distances.length > 0 && (<><dt>Distances</dt><dd>{e.distances.join(' / ')}</dd></>)}
+    {e.price && (<><dt>Cost</dt><dd>{e.price}</dd></>)}
+  </dl>
+  {e.description && <p>{e.description}</p>}
+  {e.url && <p><a class="cta" href={e.url} target="_blank" rel="noopener">Details and registration →</a></p>}
+</Base>
+<style>
+  .host { margin-bottom: 0; }
+  h1 { margin-top: 0.2rem; }
+  dl { display: grid; grid-template-columns: 6.5rem 1fr; gap: 0.5rem 1rem; margin: 1.5rem 0; }
+  dt { color: var(--muted); }
+  dd { margin: 0; }
+  .cta {
+    display: inline-block; padding: 0.6rem 1rem; border-radius: 8px;
+    background: var(--accent); color: #fff; text-decoration: none; font-weight: 600;
+  }
+  .cta:hover { color: #fff; opacity: 0.9; }
+</style>

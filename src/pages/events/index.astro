@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import EventRow from '../../components/EventRow.astro';
+import { upcomingEvents, fmtMonth } from '../../lib/events';
+
+const events = await upcomingEvents();
+const byMonth = Map.groupBy(events, (e) => fmtMonth(e.data.date));
+---
+<Base title="Upcoming events">
+  <h1>Upcoming events</h1>
+  {events.length === 0 && <p class="muted">Nothing on the calendar yet.</p>}
+  {[...byMonth].map(([month, list]) => (
+    <section>
+      <h2>{month}</h2>
+      <ul class="list">{list.map((e) => <EventRow event={e} />)}</ul>
+    </section>
+  ))}
+</Base>
+<style>
+  .list { padding: 0; margin: 0; border-top: 1px solid var(--line); }
+</style>

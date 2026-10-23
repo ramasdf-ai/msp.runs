@@ -1,0 +1,10 @@
+# Local clubs, run groups, and shops. Add `url` when you have it.
+- id: twin-cities-in-motion
+  name: Twin Cities in Motion
+  blurb: Organizers of the Twin Cities Marathon weekend.
+- id: mdra
+  name: Minnesota Distance Running Association
+  blurb: Statewide running association and race calendar.
+- id: upper-midwest-trail-runners
+  name: Upper Midwest Trail Runners
+  blurb: Trail running community and race series.

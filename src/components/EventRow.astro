@@ -1,0 +1,26 @@
+---
+import type { Event } from '../lib/events';
+import { fmtDay, fmtTime } from '../lib/events';
+import { url } from '../lib/site';
+
+const { event } = Astro.props as { event: Event };
+const e = event.data;
+---
+<li data-date={e.date} data-hide-past>
+  <a href={url(`events/${event.id}`)} class="row">
+    <span class="when mono"><span data-rel>{fmtDay(e.date)}</span><br /><span class="muted">{fmtTime(e.start_time)}</span></span>
+    <span class="what">
+      <strong>{e.name}</strong>
+      <span class="muted">{e.venue} · {e.host}</span>
+      {e.distances.length > 0 && <span class="dist">{e.distances.map((d) => <span class="chip">{d}</span>)}</span>}
+    </span>
+  </a>
+</li>
+<style>
+  li { list-style: none; border-bottom: 1px solid var(--line); }
+  .row { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.75rem; padding: 0.7rem 0; text-decoration: none; }
+  .when { font-size: 0.85rem; }
+  .what { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+  .dist { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-top: 0.2rem; }
+  @media (max-width: 420px) { .row { grid-template-columns: 5.5rem 1fr; } }
+</style>

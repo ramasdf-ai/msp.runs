@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import EventRow from '../components/EventRow.astro';
+import EventCard from '../components/EventCard.astro';
+import { upcomingEvents, recentlyAdded } from '../lib/events';
+import { getCollection } from 'astro:content';
+import { SITE, url } from '../lib/site';
+
+const soon = (await upcomingEvents()).slice(0, 12);
+const recent = await recentlyAdded(3);
+const groups = await getCollection('groups');
+---
+<Base>
+  <h1>Twin Cities Running Events</h1>
+  <p>
+    {SITE.name} rounds up group runs, races, trail runs, and social runs across Minneapolis and St. Paul.
+    It's kept up by volunteers. Know of something missing? <a href={SITE.submitUrl} target="_blank" rel="noopener">Submit your event</a>.
+  </p>
+  <ul class="nav">
+    <li><a href={url('events')}>Upcoming events</a></li>
+    <li><a href={url('calendar.ics')}>Subscribe (calendar feed)</a></li>
+    <li><a href={url('groups')}>Local clubs and run groups</a></li>
+    <li><a href={SITE.submitUrl} target="_blank" rel="noopener">Submit your event</a></li>
+  </ul>
+
+  <h2>Coming up soon</h2>
+  {soon.length ? <ul class="list">{soon.map((e) => <EventRow event={e} />)}</ul> : <p class="muted">Nothing on the calendar yet.</p>}
+  <p><a href={url('events')}>Browse all events →</a></p>
+
+  {recent.length > 0 && (
+    <>
+      <h2>Recently added</h2>
+      <div class="cards">{recent.map((e) => <EventCard event={e} />)}</div>
+    </>
+  )}
+
+  <h2>Local running by these good folks</h2>
+  <div class="groups">
+    {groups.map((g) => (g.data.url ? <a href={g.data.url}>{g.data.name}</a> : <span>{g.data.name}</span>))}
+  </div>
+</Base>
+<style>
+  .nav { padding-left: 1.1rem; }
+  .list { padding: 0; margin: 0; border-top: 1px solid var(--line); }
+  .cards { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .groups { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .groups > * {
+    padding: 0.4rem 0.75rem; border: 1px solid var(--line); border-radius: 8px;
+    background: var(--card); text-decoration: none; font-size: 0.9rem;
+  }
+</style>

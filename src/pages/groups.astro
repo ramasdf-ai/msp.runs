@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '../lib/site';
+
+const groups = await getCollection('groups');
+---
+<Base title="Local clubs and run groups">
+  <h1>Local clubs and run groups</h1>
+  <p>Clubs, run groups, and shops that put on runs around the Twin Cities. Want yours listed? <a href={SITE.submitUrl} target="_blank" rel="noopener">Let us know</a>.</p>
+  <ul class="list">
+    {groups.map((g) => (
+      <li>
+        {g.data.url ? <a href={g.data.url}><strong>{g.data.name}</strong></a> : <strong>{g.data.name}</strong>}
+        {g.data.blurb && <span class="muted"> · {g.data.blurb}</span>}
+      </li>
+    ))}
+  </ul>
+</Base>
+<style>
+  .list { padding: 0; border-top: 1px solid var(--line); }
+  .list li { list-style: none; padding: 0.7rem 0; border-bottom: 1px solid var(--line); }
+</style>

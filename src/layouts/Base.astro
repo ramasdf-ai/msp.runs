@@ -1,0 +1,121 @@
+---
+import { SITE, url } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description = 'Group runs, races, and social runs in the Twin Cities.' } = Astro.props;
+const fullTitle = title ? `${title} · ${SITE.name}` : `${SITE.name} · ${SITE.tagline}`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="view-transition" content="same-origin" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <link rel="alternate" type="text/calendar" title="msp.run calendar" href={url('calendar.ics')} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a href={url('/')} class="brand">{SITE.name}</a>
+      <span class="tagline">{SITE.tagline}</span>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <h2>Even more links</h2>
+      <ul class="links">
+        <li><a href="https://www.reddit.com/r/TwinCities/">r/TwinCities</a></li>
+        <li><a href={url('groups')}>Local clubs and run groups</a></li>
+        <li><a href={SITE.submitUrl} target="_blank" rel="noopener">Submit your event</a></li>
+      </ul>
+      <p class="fine">Made by volunteers. Event details change, so always confirm with the host.</p>
+    </footer>
+    <script>
+      // Pages are built ahead of time, so relabel/hide by the viewer's actual date (Twin Cities time).
+      const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago' }).format(new Date());
+      const t = new Date(today + 'T00:00:00Z');
+      t.setUTCDate(t.getUTCDate() + 1);
+      const tomorrow = t.toISOString().slice(0, 10);
+      document.querySelectorAll<HTMLElement>('[data-date]').forEach((el) => {
+        const d = el.dataset.date!;
+        if (d < today && el.dataset.hidePast !== undefined) el.hidden = true;
+        const label = el.querySelector<HTMLElement>('[data-rel]');
+        if (label) {
+          if (d === today) label.textContent = 'Today';
+          else if (d === tomorrow) label.textContent = 'Tomorrow';
+        }
+      });
+    </script>
+    <style is:global>
+      :root {
+        --bg: #fbf8f3;
+        --fg: #1d1b18;
+        --muted: #6b655c;
+        --line: #e4ddd2;
+        --card: #ffffff;
+        --accent: #d4471f;
+        --chip: #f3ebe0;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) {
+          --bg: #171513;
+          --fg: #ece7df;
+          --muted: #a39b8f;
+          --line: #322e29;
+          --card: #1f1c19;
+          --accent: #ff7a4d;
+          --chip: #2a2622;
+        }
+      }
+      :root[data-theme='dark'] {
+        --bg: #171513;
+        --fg: #ece7df;
+        --muted: #a39b8f;
+        --line: #322e29;
+        --card: #1f1c19;
+        --accent: #ff7a4d;
+        --chip: #2a2622;
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0 auto;
+        max-width: 760px;
+        padding: 0 16px 48px;
+        background: var(--bg);
+        color: var(--fg);
+        font: 16px/1.55 'IBM Plex Sans', system-ui, sans-serif;
+      }
+      a { color: inherit; }
+      a:hover { color: var(--accent); }
+      h1 { font-size: 2rem; line-height: 1.15; margin: 1.5rem 0 0.75rem; letter-spacing: -0.01em; }
+      h2 { font-size: 1.1rem; margin: 2.5rem 0 0.75rem; }
+      .topbar {
+        display: flex; gap: 0.75rem; align-items: baseline; flex-wrap: wrap;
+        padding: 1rem 0; border-bottom: 1px solid var(--line);
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      }
+      .brand { font-weight: 600; text-decoration: none; color: var(--accent); }
+      .tagline { color: var(--muted); font-size: 0.9rem; }
+      .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+      .muted { color: var(--muted); }
+      .chip {
+        display: inline-block; padding: 0.05rem 0.5rem; border-radius: 999px;
+        background: var(--chip); font-size: 0.8rem; white-space: nowrap;
+      }
+      footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+      .links { padding-left: 1.1rem; }
+      .fine { color: var(--muted); font-size: 0.85rem; }
+    </style>
+  </body>
+</html>

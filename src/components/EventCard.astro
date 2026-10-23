@@ -1,0 +1,24 @@
+---
+import type { Event } from '../lib/events';
+import { fmtDay, fmtTime } from '../lib/events';
+import { TYPE_LABEL, url } from '../lib/site';
+
+const { event } = Astro.props as { event: Event };
+const e = event.data;
+---
+<a href={url(`events/${event.id}`)} class="card" data-date={e.date}>
+  <span class="host muted">{e.host}</span>
+  <strong>{e.name}</strong>
+  <span class="mono">{fmtDay(e.date)} · {fmtTime(e.start_time)}</span>
+  <span class="muted">{e.venue}</span>
+  <span><span class="chip">{TYPE_LABEL[e.type]}{e.distances.length ? ` · ${e.distances.join(' / ')}` : ''}</span></span>
+</a>
+<style>
+  .card {
+    display: flex; flex-direction: column; gap: 0.2rem; padding: 0.9rem 1rem;
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px; text-decoration: none;
+  }
+  .card:hover { border-color: var(--accent); }
+  .host { font-size: 0.85rem; }
+  .mono { font-size: 0.85rem; }
+</style>
