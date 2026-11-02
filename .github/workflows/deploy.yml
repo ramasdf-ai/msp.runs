@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: '0 10 * * *' # daily ~5am Central, so past events drop off
+    - cron: '7 * * * *' # hourly: picks up approved form submissions, drops past events
   workflow_dispatch:
 
 permissions:
@@ -30,6 +30,7 @@ jobs:
         env:
           SITE: https://${{ github.repository_owner }}.github.io
           BASE: /${{ github.event.repository.name }}
+          SUBMISSIONS_CSV_URL: ${{ secrets.SUBMISSIONS_CSV_URL }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

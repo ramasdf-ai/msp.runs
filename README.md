@@ -33,4 +33,14 @@ npm run build    # outputs dist/
 
 ## Deploy
 
-Pushing to `main` deploys to GitHub Pages via `.github/workflows/deploy.yml` (enable Pages → Source: GitHub Actions in repo settings). It also rebuilds daily so past events drop off.
+Pushing to `main` deploys to GitHub Pages via `.github/workflows/deploy.yml` (enable Pages → Source: GitHub Actions in repo settings). It also rebuilds hourly, so past events drop off and approved submissions appear.
+
+## Form submissions
+
+The "Submit your event" Google Form writes to a response sheet. That sheet, published as CSV, is read on every build through the `SUBMISSIONS_CSV_URL` repository secret, which is kept out of the repo because the sheet contains submitters' emails.
+
+- Type `yes` in a row's **Approved** column to publish it.
+- Once an email has an approved event, its later submissions go live automatically (leave **Approved** blank).
+- Type `no` to hide any event. Trust only comes from a `yes`.
+
+The site rebuilds hourly, so changes show up within the hour. If the sheet can't be reached, the build skips submissions instead of failing.
