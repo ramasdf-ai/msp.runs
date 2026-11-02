@@ -136,7 +136,12 @@ export function submittedEvents(): Promise<Event[]> {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return res.text();
     })
-    .then((text) => eventsFromRows(parseCsv(text)))
+    .then((text) => {
+      const rows = parseCsv(text);
+      const events = eventsFromRows(rows);
+      console.log(`[submissions] ${Math.max(rows.length - 1, 0)} responses, ${events.length} published`);
+      return events;
+    })
     .catch((err) => {
       // Never fail the deploy over the sheet; just skip submissions this build.
       console.warn(`[submissions] skipped: ${err.message}`);
