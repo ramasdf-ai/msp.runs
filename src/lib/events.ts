@@ -25,8 +25,8 @@ async function recurringEvents(): Promise<Event[]> {
     const offset = (WEEKDAYS.indexOf(r.weekday) - new Date(`${today}T00:00:00Z`).getUTCDay() + 7) % 7;
     for (let w = 0; w < WEEKS_AHEAD; w++) {
       const date = addDays(today, offset + w * 7);
-      if ((r.starts && date < r.starts) || (r.ends && date > r.ends)) continue;
-      const { weekday, starts, ends, ...rest } = r;
+      if ((r.starts && date < r.starts) || (r.ends && date > r.ends) || r.skip.includes(date)) continue;
+      const { weekday, starts, ends, skip, ...rest } = r;
       out.push({ id: `${date}-${id}`, series: id, data: { ...rest, date, price: undefined } });
     }
   }

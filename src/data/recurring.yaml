@@ -1,5 +1,5 @@
 # Weekly group runs. Each one shows up on the calendar for the next 6 weeks.
-# Use `starts` / `ends` (YYYY-MM-DD) for seasonal runs.
+# Use `starts` / `ends` (YYYY-MM-DD) for seasonal runs, and `skip` for dates it doesn't run.
 
 - id: mill-city-highland-monday
   name: Highland Community Run
@@ -27,4 +27,18 @@
   host: Mill City Running
   url: https://www.millcityrunning.com/pages/calendar
   description: Weekly community run from the Northeast store, 6:00 to 7:30 PM.
+  added: 2026-11-02
+
+- id: mill-city-fresh-coffee-friday
+  name: Fresh Coffee Friday @ Northeast
+  weekday: Fri
+  start_time: "06:30"
+  type: social
+  venue: 411 E Hennepin Ave (Mill City Running Northeast)
+  city: Minneapolis
+  host: Mill City Running
+  url: https://www.millcityrunning.com/pages/calendar
+  description: Early run plus coffee at the Northeast store, 6:30 to 8:30 AM.
+  # Nov 13 is Flapjack Friday (in events.yaml); Dec 25 and Jan 1 are holidays.
+  skip: [2026-11-13, 2026-12-25, 2027-01-01]
   added: 2026-11-02

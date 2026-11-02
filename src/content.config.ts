@@ -41,6 +41,7 @@ const recurring = defineCollection({
     description: z.string().optional(),
     starts: isoDate.optional(), // first date it runs (season start)
     ends: isoDate.optional(), // last date it runs (season end)
+    skip: z.array(isoDate).default([]), // dates it doesn't run (holidays, special editions)
     added: isoDate,
   }),
 });
