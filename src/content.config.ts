@@ -38,6 +38,7 @@ const recurring = defineCollection({
     city: z.string().optional(),
     host: z.string(),
     url: z.string().url().optional(),
+    price: z.string().optional(),
     description: z.string().optional(),
     starts: isoDate.optional(), // first date it runs (season start)
     ends: isoDate.optional(), // last date it runs (season end)

@@ -42,3 +42,21 @@
   # Nov 13 is Flapjack Friday (in events.yaml); Dec 25 and Jan 1 are holidays.
   skip: [2026-11-13, 2026-12-25, 2027-01-01]
   added: 2026-11-02
+
+- id: polar-bears-saturday
+  name: Polar Bears Group Run
+  weekday: Sat
+  start_time: "08:00"
+  type: group-run
+  distances: [3–10+ mi]
+  venue: Rotating location (check with the host)
+  city: Twin Cities
+  host: Run Minnesota
+  url: https://train.run-minnesota.org/page/show
+  price: Free
+  description: >-
+    Winter Saturday group runs at rotating spots around Minneapolis, St. Paul, and the
+    suburbs. All abilities welcome, typically 7:00 to 12:00+ min/mile.
+  starts: 2026-11-07
+  ends: 2027-02-27
+  added: 2026-11-02
