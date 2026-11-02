@@ -14,4 +14,16 @@
 #   url: https://example.com/register
 #   price: "$40"
 #   added: 2026-10-23
-[]
+
+- id: 2026-11-07-mill-city-assisted-long-run
+  name: Assisted Long Run @ Highland
+  date: 2026-11-07
+  start_time: "08:00"
+  type: group-run
+  distances: [6–20 mi]
+  venue: 767 Cleveland Ave S (Mill City Running Highland)
+  city: St. Paul
+  host: Mill City Running
+  url: https://www.millcityrunning.com/pages/calendar
+  description: Mill City's supported long run (ALR), 8:00 AM to noon.
+  added: 2026-11-02

@@ -2,7 +2,7 @@
 # Use `starts` / `ends` (YYYY-MM-DD) for seasonal runs.
 
 - id: mill-city-highland-monday
-  name: Monday Night in Highland
+  name: Highland Community Run
   weekday: Mon
   start_time: "18:00"
   type: group-run
@@ -16,3 +16,27 @@
     to 13+ min/mile, plus a walking group. Routes alternate weekly (Team Northbound vs.
     Team Southbound). Sign the waiver before your first run.
   added: 2026-10-23
+
+- id: mill-city-northeast-tuesday
+  name: Northeast Community Run
+  weekday: Tue
+  start_time: "18:00"
+  type: group-run
+  venue: 411 E Hennepin Ave (Mill City Running Northeast)
+  city: Minneapolis
+  host: Mill City Running
+  url: https://www.millcityrunning.com/pages/calendar
+  description: Weekly community run from the Northeast store, 6:00 to 7:30 PM.
+  added: 2026-11-02
+
+- id: mill-city-fresh-coffee-friday
+  name: Fresh Coffee Friday @ Northeast
+  weekday: Fri
+  start_time: "06:30"
+  type: social
+  venue: 411 E Hennepin Ave (Mill City Running Northeast)
+  city: Minneapolis
+  host: Mill City Running
+  url: https://www.millcityrunning.com/pages/calendar
+  description: Early run plus coffee at the Northeast store, 6:30 to 8:30 AM.
+  added: 2026-11-02
