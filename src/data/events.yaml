@@ -27,3 +27,64 @@
   url: https://www.millcityrunning.com/pages/calendar
   description: Mill City's supported long run (ALR), 8:00 AM to noon.
   added: 2026-11-02
+
+- id: 2026-11-06-mill-city-fresh-coffee-friday
+  name: Fresh Coffee Friday @ Northeast
+  date: 2026-11-06
+  start_time: "06:30"
+  type: social
+  venue: 411 E Hennepin Ave (Mill City Running Northeast)
+  city: Minneapolis
+  host: Mill City Running
+  url: https://www.millcityrunning.com/pages/calendar
+  description: Early run plus coffee at the Northeast store, 6:30 to 8:30 AM.
+  added: 2026-11-02
+
+- id: 2026-11-12-mill-city-bipoc-community-run
+  name: BIPOC Community Run @ Highland
+  date: 2026-11-12
+  start_time: "18:00"
+  type: group-run
+  venue: 767 Cleveland Ave S (Mill City Running Highland)
+  city: St. Paul
+  host: Mill City Running
+  url: https://www.millcityrunning.com/pages/calendar
+  description: 6:00 to 7:30 PM.
+  added: 2026-11-02
+
+- id: 2026-11-13-mill-city-flapjack-friday
+  name: Flapjack Friday @ Northeast
+  date: 2026-11-13
+  start_time: "06:30"
+  type: social
+  venue: 411 E Hennepin Ave (Mill City Running Northeast)
+  city: Minneapolis
+  host: Mill City Running
+  url: https://www.millcityrunning.com/pages/calendar
+  description: Early run plus pancakes at the Northeast store, 6:30 to 8:30 AM.
+  added: 2026-11-02
+
+- id: 2026-11-20-mill-city-fresh-coffee-friday
+  name: Fresh Coffee Friday @ Northeast
+  date: 2026-11-20
+  start_time: "06:30"
+  type: social
+  venue: 411 E Hennepin Ave (Mill City Running Northeast)
+  city: Minneapolis
+  host: Mill City Running
+  url: https://www.millcityrunning.com/pages/calendar
+  description: Early run plus coffee at the Northeast store, 6:30 to 8:30 AM.
+  added: 2026-11-02
+
+- id: 2026-11-21-mill-city-assisted-long-run
+  name: Assisted Long Run @ Northeast
+  date: 2026-11-21
+  start_time: "08:00"
+  type: group-run
+  distances: [6–20 mi]
+  venue: 411 E Hennepin Ave (Mill City Running Northeast)
+  city: Minneapolis
+  host: Mill City Running
+  url: https://www.millcityrunning.com/pages/calendar
+  description: Mill City's supported long run (ALR), 8:00 AM to noon.
+  added: 2026-11-02

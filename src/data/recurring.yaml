@@ -28,15 +28,3 @@
   url: https://www.millcityrunning.com/pages/calendar
   description: Weekly community run from the Northeast store, 6:00 to 7:30 PM.
   added: 2026-11-02
-
-- id: mill-city-fresh-coffee-friday
-  name: Fresh Coffee Friday @ Northeast
-  weekday: Fri
-  start_time: "06:30"
-  type: social
-  venue: 411 E Hennepin Ave (Mill City Running Northeast)
-  city: Minneapolis
-  host: Mill City Running
-  url: https://www.millcityrunning.com/pages/calendar
-  description: Early run plus coffee at the Northeast store, 6:30 to 8:30 AM.
-  added: 2026-11-02
