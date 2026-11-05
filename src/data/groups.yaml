@@ -11,6 +11,18 @@
   name: Run Minnesota
   url: https://train.run-minnesota.org/page/show
   blurb: Training programs and group runs.
+- id: run-the-parks
+  name: Run the Parks
+  url: https://www.strava.com/clubs/MPRBruntheparks
+  blurb: Minneapolis Park & Rec run club, Saturday mornings in the downtown parks. Routes posted on Strava.
+- id: lakes-running-co
+  name: The Lakes Running Co.
+  url: https://www.lakesrun.com/community
+  blurb: Excelsior running shop and home of the Thursday Night Jogging Club (Thursdays 6:30 PM).
+- id: wild-river-running
+  name: Wild River Running
+  url: https://www.wildriverrunning.com/group-runs/
+  blurb: Stillwater running shop with group runs Tuesday 6 PM and Friday 6:30 AM.
 - id: dirt-folk-trail
   name: Dirt Folk Trail
   url: https://www.strava.com/clubs/2280336
