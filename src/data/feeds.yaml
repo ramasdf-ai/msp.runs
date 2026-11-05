@@ -13,6 +13,26 @@
   replaces: polar-bears-saturday
   added: 2026-11-05
 
+# The club's public Google Calendar (embedded at minneapolish3.com/#calendar).
+# Covers the Sunday kennel (MH3) and the Thursday sister kennel (T3H3); start spots rotate.
+- id: minneapolis-h3
+  url: https://calendar.google.com/calendar/ical/minneapolishash%40gmail.com/public/basic.ics
+  host: Minneapolis Hash House Harriers
+  type: group-run
+  distances: [3–6 mi]
+  price: Free first time, then $5–6
+  link: https://minneapolish3.com/#calendar
+  added: 2026-11-05
+
+# Missing Link Running's public Google Calendar (embedded at missinglinkrunning.com/calendar).
+# Coach-led runs and workouts; the regular schedule pauses over winter.
+- id: missing-link
+  url: https://calendar.google.com/calendar/ical/0sfsrf1s77lbu9dqmq1njcondo%40group.calendar.google.com/public/basic.ics
+  host: Missing Link Running
+  type: group-run
+  link: https://missinglinkrunning.com/calendar
+  added: 2026-11-05
+
 - id: run-the-parks
   url: https://calendar.google.com/calendar/ical/29d68f5e1215cba17a8971e0d82c677442cc8978037553df25acb98cee94ca13%40group.calendar.google.com/public/basic.ics
   host: Run the Parks (Minneapolis Parks & Rec)
