@@ -2,6 +2,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import { submittedEvents } from './submissions';
 import { feedEvents } from './feeds';
 import { scrapedEvents } from './scraped';
+import { htmlToText, clip } from './html';
 
 export type Event = Pick<CollectionEntry<'events'>, 'id' | 'data'> & { series?: string };
 
@@ -40,7 +41,16 @@ export async function allEvents(): Promise<Event[]> {
   const feeds = await feedEvents();
   const recurring = (await recurringEvents()).filter((e) => !feeds.replaced.has(e.series!));
   const handEntered = [...oneOff, ...recurring];
-  return [...handEntered, ...feeds.events, ...scrapedEvents(handEntered), ...(await submittedEvents())].sort((a, b) => sortKey(a).localeCompare(sortKey(b)));
+  return [...handEntered, ...feeds.events, ...scrapedEvents(handEntered), ...(await submittedEvents())]
+    .map(cleanText)
+    .sort((a, b) => sortKey(a).localeCompare(sortKey(b)));
+}
+
+// Scraped pages, feeds and form rows can carry HTML; show it as plain text everywhere.
+function cleanText(e: Event): Event {
+  const d = e.data;
+  const description = d.description ? clip(htmlToText(d.description), 600) || undefined : undefined;
+  return { ...e, data: { ...d, name: htmlToText(d.name), venue: htmlToText(d.venue), description } };
 }
 
 export async function upcomingEvents(): Promise<Event[]> {
