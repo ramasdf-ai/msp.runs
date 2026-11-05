@@ -44,3 +44,11 @@ The "Submit your event" Google Form writes to a response sheet. That sheet, publ
 - Type `no` to hide any event. Trust only comes from a `yes`.
 
 The site rebuilds hourly, so changes show up within the hour. If the sheet can't be reached, the build skips submissions instead of failing.
+
+## Scraped calendars
+
+Clubs without an iCal feed are scraped with a headless browser on every build;
+see [`scrapers/README.md`](scrapers/README.md). Results land in
+`src/data/scraped/` and are committed back to `main` when they change. A
+hand-entered event with the same host, date and start time always wins over a
+scraped one.

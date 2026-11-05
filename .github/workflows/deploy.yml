@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write # lets the build commit fresh scraped events back to main
   pages: write
   id-token: write
 
@@ -25,7 +25,30 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            scrapers/package-lock.json
       - run: npm ci
+      # Scrapers never fail the deploy: on any problem they keep the last good
+      # src/data/scraped/*.json and leave a warning on the run.
+      - name: Scrape club calendars
+        continue-on-error: true
+        timeout-minutes: 10
+        working-directory: scrapers
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          node run.mjs
+      - name: Save scraped events
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        run: |
+          git add src/data/scraped
+          if git diff --cached --quiet; then echo "No changes to scraped events"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898732+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update scraped events"
+          git push || echo "::warning title=Scrapers::Couldn't push scraped events (main moved?); this deploy still uses them"
       - run: npm run build
         env:
           SITE: https://${{ github.repository_owner }}.github.io
