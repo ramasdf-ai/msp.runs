@@ -20,6 +20,16 @@ for (const { id, url } of feeds.filter((f) => !only || f.id === only)) {
     const upcoming = all.filter((e) => e.date >= today).sort((a, b) => a.date.localeCompare(b.date));
     const rrules = (text.match(/^RRULE:/gm) ?? []).length;
     console.log(`== ${id}: HTTP ${res.status}, ${all.length} events, ${upcoming.length} upcoming, ${rrules} repeating (RRULE)`);
+    // Repeating events that may still produce future dates (no UNTIL/COUNT, or UNTIL ahead).
+    const blocks = text.split('BEGIN:VEVENT').slice(1);
+    const live = blocks.filter((b) => {
+      const r = b.match(/^RRULE:(.*)$/m)?.[1];
+      if (!r) return false;
+      const until = r.match(/UNTIL=(\d{8})/)?.[1];
+      return until ? until >= today.replace(/-/g, '') : !/COUNT=/.test(r);
+    });
+    console.log(`   ${live.length} repeating events still active`);
+    for (const b of live.slice(0, 6)) console.log(`   RRULE ${b.match(/^SUMMARY:(.*)$/m)?.[1]} | ${b.match(/^DTSTART[^:]*:(.*)$/m)?.[1]} | ${b.match(/^RRULE:(.*)$/m)?.[1]}`);
     for (const e of upcoming.slice(0, 8)) console.log(`   ${e.date} ${e.start_time ?? 'all day'}  ${e.name}  @ ${e.venue ?? '-'}`);
   } catch (err) {
     console.log(`== ${id}: FAILED ${err.message}`);
