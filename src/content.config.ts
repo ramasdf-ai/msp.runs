@@ -47,6 +47,21 @@ const recurring = defineCollection({
   }),
 });
 
+// iCal feeds fetched at build time (see src/lib/feeds.ts).
+const feeds = defineCollection({
+  loader: file('src/data/feeds.yaml'),
+  schema: z.object({
+    url: z.string().url(),
+    host: z.string(),
+    type: z.enum(['race', 'group-run', 'social', 'trail']).default('group-run'),
+    distances: z.array(z.string()).default([]),
+    price: z.string().optional(),
+    link: z.string().url().optional(),
+    replaces: z.string().optional(),
+    added: isoDate,
+  }),
+});
+
 const groups = defineCollection({
   loader: file('src/data/groups.yaml'),
   schema: z.object({
@@ -56,4 +71,4 @@ const groups = defineCollection({
   }),
 });
 
-export const collections = { events, recurring, groups };
+export const collections = { events, recurring, feeds, groups };
