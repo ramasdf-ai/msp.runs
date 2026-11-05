@@ -101,3 +101,55 @@
   url: https://www.millcityrunning.com/pages/calendar
   description: 6:00 to 7:30 PM.
   added: 2026-11-02
+
+- id: 2026-11-19-lakes-thursday-night-jogging-club
+  name: Thursday Night Jogging Club (early start)
+  date: 2026-11-19
+  start_time: "17:30"
+  type: group-run
+  venue: 218 Water St (The Lakes Running Co.)
+  city: Excelsior
+  host: The Lakes Running Co.
+  url: https://www.lakesrun.com/community
+  price: Free
+  description: Third-Thursday edition of the weekly store run, starting an hour early at 5:30 PM.
+  added: 2026-11-05
+
+- id: 2026-12-17-lakes-thursday-night-jogging-club
+  name: Thursday Night Jogging Club (early start)
+  date: 2026-12-17
+  start_time: "17:30"
+  type: group-run
+  venue: 218 Water St (The Lakes Running Co.)
+  city: Excelsior
+  host: The Lakes Running Co.
+  url: https://www.lakesrun.com/community
+  price: Free
+  description: Third-Thursday edition of the weekly store run, starting an hour early at 5:30 PM.
+  added: 2026-11-05
+
+- id: 2027-01-21-lakes-thursday-night-jogging-club
+  name: Thursday Night Jogging Club (early start)
+  date: 2027-01-21
+  start_time: "17:30"
+  type: group-run
+  venue: 218 Water St (The Lakes Running Co.)
+  city: Excelsior
+  host: The Lakes Running Co.
+  url: https://www.lakesrun.com/community
+  price: Free
+  description: Third-Thursday edition of the weekly store run, starting an hour early at 5:30 PM.
+  added: 2026-11-05
+
+- id: 2027-02-18-lakes-thursday-night-jogging-club
+  name: Thursday Night Jogging Club (early start)
+  date: 2027-02-18
+  start_time: "17:30"
+  type: group-run
+  venue: 218 Water St (The Lakes Running Co.)
+  city: Excelsior
+  host: The Lakes Running Co.
+  url: https://www.lakesrun.com/community
+  price: Free
+  description: Third-Thursday edition of the weekly store run, starting an hour early at 5:30 PM.
+  added: 2026-11-05

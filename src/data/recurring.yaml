@@ -60,3 +60,46 @@
   starts: 2026-11-07
   ends: 2027-02-27
   added: 2026-11-02
+
+- id: lakes-thursday-night-jogging-club
+  name: Thursday Night Jogging Club
+  weekday: Thu
+  start_time: "18:30"
+  type: group-run
+  venue: 218 Water St (The Lakes Running Co.)
+  city: Excelsior
+  host: The Lakes Running Co.
+  url: https://www.lakesrun.com/community
+  price: Free
+  description: >-
+    Casual weekly group run from the store, no registration needed. On the third
+    Thursday of the month it starts at 5:30 PM instead. Changes are posted on the
+    store's Facebook events page.
+  # Third Thursdays start at 5:30 PM; those dates are in events.yaml.
+  skip: [2026-11-19, 2026-12-17, 2027-01-21, 2027-02-18]
+  added: 2026-11-05
+
+- id: wild-river-tuesday
+  name: Wild River Running Tuesday Group Run
+  weekday: Tue
+  start_time: "18:00"
+  type: group-run
+  venue: 224 Chestnut St E (Wild River Running)
+  city: Stillwater
+  host: Wild River Running
+  url: https://www.wildriverrunning.com/group-runs/
+  description: Weekly group run, usually from the store (the start occasionally rotates).
+  added: 2026-11-05
+
+- id: wild-river-friday
+  name: Wild River Running Friday Morning Run
+  weekday: Fri
+  start_time: "06:30"
+  type: group-run
+  venue: 224 Chestnut St E (Wild River Running)
+  city: Stillwater
+  host: Wild River Running
+  url: https://www.wildriverrunning.com/group-runs/
+  description: Early weekly group run, usually from the store (the start occasionally rotates).
+  skip: [2026-12-25, 2027-01-01]
+  added: 2026-11-05
