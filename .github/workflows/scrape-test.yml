@@ -1,11 +1,11 @@
-name: Test scrapers
+name: Test scrapers and feeds
 
 # Runs the scrapers without deploying, so they can be tuned from a branch.
 # Download the "scrape-debug" artifact to see each page as the browser saw it.
 on:
   push:
     branches-ignore: [main]
-    paths: ['scrapers/**', '.github/workflows/scrape-test.yml']
+    paths: ['scrapers/**', 'src/data/feeds.yaml', '.github/workflows/scrape-test.yml']
   workflow_dispatch:
 
 permissions:
@@ -28,6 +28,8 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm test
+      - name: Check iCal feeds
+        run: node check-feeds.mjs
       - name: Scrape (debug)
         run: node run.mjs
         env:

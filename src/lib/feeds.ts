@@ -2,7 +2,13 @@
 // A feed that fails to load is skipped (the build never fails over it).
 
 import { getCollection } from 'astro:content';
-import type { Event } from './events';
+import { todayLocal, type Event } from './events';
+
+const addDays = (d: string, n: number) => {
+  const t = new Date(`${d}T00:00:00Z`);
+  t.setUTCDate(t.getUTCDate() + n);
+  return t.toISOString().slice(0, 10);
+};
 
 const TZ = 'America/Chicago';
 
@@ -77,6 +83,7 @@ export function feedEvents() {
   cached ??= (async () => {
     const events: Event[] = [];
     const replaced = new Set<string>();
+    const oldest = addDays(todayLocal(), -30);
     for (const { id: feedId, data: f } of await getCollection('feeds')) {
       try {
         const res = await fetch(f.url.replace(/^webcal:/, 'https:'));
@@ -85,7 +92,8 @@ export function feedEvents() {
         const used = new Set<string>();
         let kept = 0;
         for (const e of parsed) {
-          if (e.status === 'CANCELLED') continue;
+          // Shared calendars (e.g. Google) carry years of history; skip anything long past.
+          if (e.status === 'CANCELLED' || e.date < oldest) continue;
           let id = `${e.date}-${feedId}-${slug(e.name)}`;
           for (let n = 2; used.has(id); n++) id = `${e.date}-${feedId}-${slug(e.name)}-${n}`;
           used.add(id);
