@@ -103,3 +103,33 @@
   description: Early weekly group run, usually from the store (the start occasionally rotates).
   skip: [2026-12-25, 2027-01-01]
   added: 2026-11-05
+
+- id: capital-city-saturday
+  name: Capital City Runners Saturday Group Run
+  weekday: Sat
+  start_time: "08:00"
+  type: group-run
+  venue: 2145 Ford Pkwy (Life Time / Wells Fargo lobby)
+  city: St. Paul
+  host: Capital City Runners
+  url: https://facebook.com/groups/capitalcityrunners/
+  price: Free
+  description: >-
+    Year-round group run in Highland Park. All paces and distances welcome. When they
+    meet somewhere else, it's posted in advance on Facebook.
+  added: 2026-11-05
+
+- id: capital-city-wednesday
+  name: Capital City Runners Wednesday Group Run
+  weekday: Wed
+  start_time: "18:00"
+  type: group-run
+  venue: 2145 Ford Pkwy (Life Time / Wells Fargo lobby)
+  city: St. Paul
+  host: Capital City Runners
+  url: https://facebook.com/groups/capitalcityrunners/
+  price: Free
+  description: >-
+    Year-round group run in Highland Park. All paces and distances welcome. When they
+    meet somewhere else, it's posted in advance on Facebook.
+  added: 2026-11-05
