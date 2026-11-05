@@ -15,3 +15,15 @@ export const TYPE_LABEL: Record<string, string> = {
 
 export const url = (path: string) =>
   (import.meta.env.BASE_URL.replace(/\/$/, '') + '/' + path.replace(/^\//, '')).replace(/\/+$/, '') || '/';
+
+// Subscribe links for the site's calendar feed. Google Calendar needs the
+// feed's public address, so this uses the deployed site URL.
+export function calendarLinks(site: URL | undefined) {
+  const feed = new URL(url('calendar.ics'), site ?? 'https://example.com');
+  const webcal = feed.href.replace(/^https?:/, 'webcal:');
+  return {
+    google: `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(webcal)}`,
+    webcal,
+    ics: feed.href,
+  };
+}
