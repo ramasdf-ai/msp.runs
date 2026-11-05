@@ -1,0 +1,14 @@
+# Calendar feeds (iCal / .ics) pulled on every build. Use https:// for webcal:// links.
+# Fields here fill in what the feed doesn't say.
+# `replaces`: a recurring.yaml id to hide whenever the feed loads, so the
+# hand-entered schedule only shows if the feed is down.
+
+- id: polar-bears
+  url: https://ical.sportngin.com/v3/calendar/ical?team_ids=11f1bdad-d15c-8462-b5c2-0ae11571dac3
+  host: Run Minnesota
+  type: group-run
+  distances: [3–10+ mi]
+  price: Free
+  link: https://train.run-minnesota.org/page/show
+  replaces: polar-bears-saturday
+  added: 2026-11-05

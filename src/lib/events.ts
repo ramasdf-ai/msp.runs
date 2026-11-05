@@ -1,5 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { submittedEvents } from './submissions';
+import { feedEvents } from './feeds';
 import { scrapedEvents } from './scraped';
 
 export type Event = Pick<CollectionEntry<'events'>, 'id' | 'data'> & { series?: string };
@@ -36,8 +37,10 @@ async function recurringEvents(): Promise<Event[]> {
 
 export async function allEvents(): Promise<Event[]> {
   const oneOff: Event[] = (await getCollection('events')).map(({ id, data }) => ({ id, data }));
-  const handEntered = [...oneOff, ...(await recurringEvents())];
-  return [...handEntered, ...scrapedEvents(handEntered), ...(await submittedEvents())].sort((a, b) => sortKey(a).localeCompare(sortKey(b)));
+  const feeds = await feedEvents();
+  const recurring = (await recurringEvents()).filter((e) => !feeds.replaced.has(e.series!));
+  const handEntered = [...oneOff, ...recurring];
+  return [...handEntered, ...feeds.events, ...scrapedEvents(handEntered), ...(await submittedEvents())].sort((a, b) => sortKey(a).localeCompare(sortKey(b)));
 }
 
 export async function upcomingEvents(): Promise<Event[]> {
