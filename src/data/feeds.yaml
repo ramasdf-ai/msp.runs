@@ -12,3 +12,10 @@
   link: https://train.run-minnesota.org/page/show
   replaces: polar-bears-saturday
   added: 2026-11-05
+
+- id: run-the-parks
+  url: https://calendar.google.com/calendar/ical/29d68f5e1215cba17a8971e0d82c677442cc8978037553df25acb98cee94ca13%40group.calendar.google.com/public/basic.ics
+  host: Run the Parks (Minneapolis Parks & Rec)
+  type: group-run
+  link: https://www.strava.com/clubs/MPRBruntheparks
+  added: 2026-11-05
