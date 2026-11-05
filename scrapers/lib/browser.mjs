@@ -96,7 +96,7 @@ function eventsFromJsonLd(blocks) {
  * Scrape a page. Returns { events, method, source }.
  * `debugDir` (optional) receives page.html, screenshot.png and network.json.
  */
-export async function scrapePage(pageUrl, { debugDir, waitMs = 8000 } = {}) {
+export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, nextClicks = 4 } = {}) {
   const browser = await chromium.launch();
   const responses = [];
   const icsCandidates = new Set();
@@ -106,7 +106,8 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000 } = {}) {
     page.on('response', async (res) => {
       const url = res.url();
       const type = res.headers()['content-type'] ?? '';
-      const entry = { url, status: res.status(), type };
+      const req = res.request();
+      const entry = { url, status: res.status(), type, method: req.method(), post: req.postData()?.slice(0, 500) };
       responses.push(entry);
       if (/text\/calendar/.test(type) || /\.ics(\?|$)/.test(url)) icsCandidates.add(url);
       if (/json|javascript/.test(type) && res.ok()) {
@@ -114,7 +115,10 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000 } = {}) {
           const body = await res.text();
           entry.size = body.length;
           const t = body.trim().replace(/^[^([{]*\(/, '').replace(/\);?\s*$/, ''); // strip JSONP wrapper
-          if (/^[[{]/.test(t)) entry.json = JSON.parse(t);
+          if (/^[[{]/.test(t)) {
+            entry.json = JSON.parse(t);
+            if (!Array.isArray(entry.json)) entry.keys = Object.keys(entry.json).slice(0, 20);
+          }
         } catch { /* not JSON */ }
       }
     });
@@ -124,6 +128,29 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000 } = {}) {
     // Some widgets load more when scrolled into view.
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight)).catch(() => {});
     await page.waitForTimeout(2000);
+
+    // Page forward through the widget ("next month", "load more") so we get more than
+    // its first screen of events. Each click's JSON response is captured above.
+    const NEXT = /^(next|load more|show more|more events|see more|view more)\b|next (month|week|page)|^[›»→>]$/i;
+    const clicked = [];
+    for (let i = 0; i < nextClicks; i++) {
+      const before = responses.length;
+      const target = await page.evaluateHandle((re) => {
+        const rx = new RegExp(re.source, re.flags);
+        const els = [...document.querySelectorAll('button, a, [role="button"]')].filter((el) => {
+          const label = (el.getAttribute('aria-label') || el.title || el.textContent || '').trim();
+          const r = el.getBoundingClientRect();
+          return r.width > 0 && r.height > 0 && rx.test(label) && !el.closest('header, footer, nav');
+        });
+        return els[0] ?? null;
+      }, { source: NEXT.source, flags: NEXT.flags });
+      const el = target.asElement();
+      if (!el) break;
+      clicked.push(await el.evaluate((e) => (e.getAttribute('aria-label') || e.textContent || '').trim().slice(0, 40)));
+      await el.click({ timeout: 5000 }).catch(() => {});
+      await page.waitForTimeout(2500);
+      if (responses.length === before) break; // clicking did nothing new
+    }
 
     for (const f of page.frames()) for (const u of googleIcsUrls(f.url())) icsCandidates.add(u);
     const hrefs = await page.$$eval('a[href], iframe[src]', (els) => els.map((e) => e.href || e.src)).catch(() => []);
@@ -139,7 +166,8 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000 } = {}) {
       await page.screenshot({ path: join(debugDir, 'screenshot.png'), fullPage: true }).catch(() => {});
       const frames = page.frames().map((f) => f.url()).filter((u) => u && u !== 'about:blank');
       const net = responses.map(({ json, ...r }) => ({ ...r, ...(json ? { jsonEvents: eventsFromJson(json).length } : {}) }));
-      await writeFile(join(debugDir, 'network.json'), JSON.stringify({ frames, icsCandidates: [...icsCandidates], responses: net }, null, 2));
+      const buttons = await page.$$eval('button, [role="button"]', (els) => els.map((e) => (e.getAttribute('aria-label') || e.textContent || '').trim().slice(0, 40)).filter(Boolean)).catch(() => []);
+      await writeFile(join(debugDir, 'network.json'), JSON.stringify({ frames, icsCandidates: [...icsCandidates], clicked, buttons, responses: net }, null, 2));
     }
 
     // 1. iCal feed
@@ -151,16 +179,27 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000 } = {}) {
         if (events.length) return { events, method: 'ics', source: url };
       } catch { /* try the next one */ }
     }
-    // 2. JSON from the widget's API
-    let best = { events: [] };
+    // 2. JSON from the widget's API. Merge every response from the same endpoint
+    //    (one per page/month we clicked through), dropping repeats.
+    const byEndpoint = new Map();
     for (const r of responses) {
       if (!r.json) continue;
       const events = eventsFromJson(r.json);
-      if (events.length > best.events.length) best = { events, method: 'json', source: r.url };
+      if (!events.length) continue;
+      const u = new URL(r.url);
+      const key = u.origin + u.pathname;
+      const g = byEndpoint.get(key) ?? { source: key, events: [], seen: new Set(), samples: [] };
+      for (const e of events) {
+        const k = `${e.date}|${e.start_time ?? ''}|${e.name}`;
+        if (!g.seen.has(k)) { g.seen.add(k); g.events.push(e); }
+      }
+      g.samples.push(r.json);
+      byEndpoint.set(key, g);
     }
-    if (best.events.length) {
-      if (debugDir) await writeFile(join(debugDir, 'source.json'), JSON.stringify(responses.find((r) => r.url === best.source).json, null, 2));
-      return best;
+    const best = [...byEndpoint.values()].sort((a, b) => b.events.length - a.events.length)[0];
+    if (best) {
+      if (debugDir) await writeFile(join(debugDir, 'source.json'), JSON.stringify(best.samples.at(-1), null, 2));
+      return { events: best.events, method: 'json', source: best.source };
     }
     // 3. schema.org JSON-LD
     const ld = eventsFromJsonLd(jsonLd);

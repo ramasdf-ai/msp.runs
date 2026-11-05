@@ -61,3 +61,28 @@ test('scrapePage reads events a JS widget fetches as JSON', async (t) => {
     ['BIPOC Community Run', '2026-11-12', '18:00'],
   ]);
 });
+
+test('scrapePage clicks "next" and merges each page of the widget', async (t) => {
+  const pages = {
+    1: [{ title: 'Highland Community Run', startDate: '2026-11-10T00:00:00.000Z' }],
+    2: [{ title: 'Highland Community Run', startDate: '2026-11-10T00:00:00.000Z' }, { title: 'Turkey Trot', startDate: '2026-11-26T14:00:00.000Z' }],
+  };
+  const server = createServer((req, res) => {
+    const m = req.url.match(/^\/api\/events\?page=(\d)/);
+    if (m) {
+      res.setHeader('content-type', 'application/json');
+      return res.end(JSON.stringify({ events: pages[m[1]] ?? [], page: +m[1] }));
+    }
+    res.setHeader('content-type', 'text/html');
+    res.end(`<div id=cal></div><button aria-label="Next month" id=nx>›</button><script>
+      let p=1; const load=()=>fetch('/api/events?page='+p).then(r=>r.json()).then(d=>{cal.textContent=d.events.length});
+      nx.onclick=()=>{p++;load()}; load();</script>`);
+  });
+  await new Promise((r) => server.listen(0, r));
+  t.after(() => server.close());
+  const { events } = await scrapePage(`http://127.0.0.1:${server.address().port}/`, { waitMs: 300, nextClicks: 3 });
+  assert.deepEqual(events.map((e) => [e.name, e.date, e.start_time]), [
+    ['Highland Community Run', '2026-11-09', '18:00'],
+    ['Turkey Trot', '2026-11-26', '08:00'],
+  ]);
+});
