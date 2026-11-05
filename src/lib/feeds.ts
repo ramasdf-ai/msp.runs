@@ -93,7 +93,9 @@ export function feedEvents() {
         let kept = 0;
         for (const e of parsed) {
           // Shared calendars (e.g. Google) carry years of history; skip anything long past.
-          if (e.status === 'CANCELLED' || e.date < oldest) continue;
+          // Repeating events aren't expanded, and their first date alone is misleading
+          // (e.g. a weekly "Hare TBD" placeholder), so leave them out.
+          if (e.status === 'CANCELLED' || e.date < oldest || e.rrule) continue;
           let id = `${e.date}-${feedId}-${slug(e.name)}`;
           for (let n = 2; used.has(id); n++) id = `${e.date}-${feedId}-${slug(e.name)}-${n}`;
           used.add(id);
@@ -116,7 +118,7 @@ export function feedEvents() {
           });
         }
         const repeating = parsed.filter((e) => e.rrule).length;
-        console.log(`[feeds] ${feedId}: ${kept} events${repeating ? ` (${repeating} repeating, first date only)` : ''}`);
+        console.log(`[feeds] ${feedId}: ${kept} events${repeating ? ` (${repeating} repeating events skipped)` : ''}`);
         if (kept && f.replaces) replaced.add(f.replaces);
       } catch (err) {
         console.warn(`[feeds] ${feedId} skipped: ${(err as Error).message}`);
