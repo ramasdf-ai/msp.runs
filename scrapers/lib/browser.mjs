@@ -96,10 +96,11 @@ function eventsFromJsonLd(blocks) {
  * Scrape a page. Returns { events, method, source }.
  * `debugDir` (optional) receives page.html, screenshot.png and network.json.
  */
-export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, nextClicks = 4 } = {}) {
+export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, maxPages = 12 } = {}) {
   const browser = await chromium.launch();
   const responses = [];
   const icsCandidates = new Set();
+  let pagesFetched = 1;
   try {
     const context = await browser.newContext({ userAgent: UA, timezoneId: 'America/Chicago', locale: 'en-US' });
     const page = await context.newPage();
@@ -129,27 +130,27 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, nextClicks 
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight)).catch(() => {});
     await page.waitForTimeout(2000);
 
-    // Page forward through the widget ("next month", "load more") so we get more than
-    // its first screen of events. Each click's JSON response is captured above.
-    const NEXT = /^(next|load more|show more|more events|see more|view more)\b|next (month|week|page)|^[›»→>]$/i;
-    const clicked = [];
-    for (let i = 0; i < nextClicks; i++) {
-      const before = responses.length;
-      const target = await page.evaluateHandle((re) => {
-        const rx = new RegExp(re.source, re.flags);
-        const els = [...document.querySelectorAll('button, a, [role="button"]')].filter((el) => {
-          const label = (el.getAttribute('aria-label') || el.title || el.textContent || '').trim();
-          const r = el.getBoundingClientRect();
-          return r.width > 0 && r.height > 0 && rx.test(label) && !el.closest('header, footer, nav');
-        });
-        return els[0] ?? null;
-      }, { source: NEXT.source, flags: NEXT.flags });
-      const el = target.asElement();
-      if (!el) break;
-      clicked.push(await el.evaluate((e) => (e.getAttribute('aria-label') || e.textContent || '').trim().slice(0, 40)));
-      await el.click({ timeout: 5000 }).catch(() => {});
-      await page.waitForTimeout(2500);
-      if (responses.length === before) break; // clicking did nothing new
+    // Widgets fetch events a page at a time ({"page": 1} in a POST body, or ?page=1).
+    // Ask the same endpoint for the following pages until one brings nothing new.
+    const firstPage = responses.find((r) => r.json && eventsFromJson(r.json).length);
+    if (firstPage) {
+      for (let n = 2; n <= maxPages; n++) {
+        const next = await page.evaluate(async ({ url, method, post, n }) => {
+          let body = post;
+          let target = url;
+          if (post && /"page"\s*:\s*\d+/.test(post)) body = post.replace(/"page"\s*:\s*\d+/, `"page":${n}`);
+          else if (/[?&]page=\d+/.test(url)) target = url.replace(/([?&]page=)\d+/, `$1${n}`);
+          else return null;
+          const res = await fetch(target, { method, body, headers: body ? { 'content-type': 'application/json' } : {} });
+          return res.ok ? { url: target, json: await res.json() } : null;
+        }, { url: firstPage.url, method: firstPage.method, post: firstPage.post, n }).catch(() => null);
+        if (!next) break;
+        const before = new Set(responses.filter((r) => r.json).flatMap((r) => eventsFromJson(r.json)).map((e) => `${e.date}|${e.start_time}|${e.name}`));
+        const fresh = eventsFromJson(next.json).filter((e) => !before.has(`${e.date}|${e.start_time}|${e.name}`));
+        if (!fresh.length) break;
+        responses.push({ url: next.url, status: 200, type: 'application/json', method: firstPage.method, page: n, json: next.json });
+        pagesFetched = n;
+      }
     }
 
     for (const f of page.frames()) for (const u of googleIcsUrls(f.url())) icsCandidates.add(u);
@@ -167,7 +168,7 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, nextClicks 
       const frames = page.frames().map((f) => f.url()).filter((u) => u && u !== 'about:blank');
       const net = responses.map(({ json, ...r }) => ({ ...r, ...(json ? { jsonEvents: eventsFromJson(json).length } : {}) }));
       const buttons = await page.$$eval('button, [role="button"]', (els) => els.map((e) => (e.getAttribute('aria-label') || e.textContent || '').trim().slice(0, 40)).filter(Boolean)).catch(() => []);
-      await writeFile(join(debugDir, 'network.json'), JSON.stringify({ frames, icsCandidates: [...icsCandidates], clicked, buttons, responses: net }, null, 2));
+      await writeFile(join(debugDir, 'network.json'), JSON.stringify({ frames, icsCandidates: [...icsCandidates], pagesFetched, buttons, responses: net }, null, 2));
     }
 
     // 1. iCal feed
@@ -180,7 +181,7 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, nextClicks 
       } catch { /* try the next one */ }
     }
     // 2. JSON from the widget's API. Merge every response from the same endpoint
-    //    (one per page/month we clicked through), dropping repeats.
+    //    (one per page we asked for), dropping repeats.
     const byEndpoint = new Map();
     for (const r of responses) {
       if (!r.json) continue;
@@ -199,7 +200,7 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, nextClicks 
     const best = [...byEndpoint.values()].sort((a, b) => b.events.length - a.events.length)[0];
     if (best) {
       if (debugDir) await writeFile(join(debugDir, 'source.json'), JSON.stringify(best.samples.at(-1), null, 2));
-      return { events: best.events, method: 'json', source: best.source };
+      return { events: best.events, method: pagesFetched > 1 ? `json, ${pagesFetched} pages` : 'json', source: best.source };
     }
     // 3. schema.org JSON-LD
     const ld = eventsFromJsonLd(jsonLd);

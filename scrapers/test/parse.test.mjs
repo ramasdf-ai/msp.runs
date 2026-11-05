@@ -62,27 +62,30 @@ test('scrapePage reads events a JS widget fetches as JSON', async (t) => {
   ]);
 });
 
-test('scrapePage clicks "next" and merges each page of the widget', async (t) => {
+test('scrapePage asks the widget API for later pages and merges them', async (t) => {
   const pages = {
     1: [{ title: 'Highland Community Run', startDate: '2026-11-10T00:00:00.000Z' }],
-    2: [{ title: 'Highland Community Run', startDate: '2026-11-10T00:00:00.000Z' }, { title: 'Turkey Trot', startDate: '2026-11-26T14:00:00.000Z' }],
+    2: [{ title: 'Highland Community Run', startDate: '2026-11-17T00:00:00.000Z' }, { title: 'Turkey Trot', startDate: '2026-11-26T14:00:00.000Z' }],
   };
-  const server = createServer((req, res) => {
-    const m = req.url.match(/^\/api\/events\?page=(\d)/);
-    if (m) {
+  const server = createServer(async (req, res) => {
+    if (req.url === '/api/events' && req.method === 'POST') {
+      let body = '';
+      for await (const c of req) body += c;
       res.setHeader('content-type', 'application/json');
-      return res.end(JSON.stringify({ events: pages[m[1]] ?? [], page: +m[1] }));
+      return res.end(JSON.stringify({ events: pages[JSON.parse(body).page] ?? [], settings: {} }));
     }
     res.setHeader('content-type', 'text/html');
-    res.end(`<div id=cal></div><button aria-label="Next month" id=nx>›</button><script>
-      let p=1; const load=()=>fetch('/api/events?page='+p).then(r=>r.json()).then(d=>{cal.textContent=d.events.length});
-      nx.onclick=()=>{p++;load()}; load();</script>`);
+    res.end(`<div id=cal></div><script>
+      fetch('/api/events',{method:'POST',body:JSON.stringify({shop:'x',page:1})}).then(r=>r.json()).then(d=>{cal.textContent=d.events.length});
+      </script>`);
   });
   await new Promise((r) => server.listen(0, r));
   t.after(() => server.close());
-  const { events } = await scrapePage(`http://127.0.0.1:${server.address().port}/`, { waitMs: 300, nextClicks: 3 });
+  const { events, method } = await scrapePage(`http://127.0.0.1:${server.address().port}/`, { waitMs: 300 });
+  assert.equal(method, 'json, 2 pages');
   assert.deepEqual(events.map((e) => [e.name, e.date, e.start_time]), [
     ['Highland Community Run', '2026-11-09', '18:00'],
+    ['Highland Community Run', '2026-11-16', '18:00'],
     ['Turkey Trot', '2026-11-26', '08:00'],
   ]);
 });
