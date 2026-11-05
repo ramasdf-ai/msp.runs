@@ -158,7 +158,10 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000 } = {}) {
       const events = eventsFromJson(r.json);
       if (events.length > best.events.length) best = { events, method: 'json', source: r.url };
     }
-    if (best.events.length) return best;
+    if (best.events.length) {
+      if (debugDir) await writeFile(join(debugDir, 'source.json'), JSON.stringify(responses.find((r) => r.url === best.source).json, null, 2));
+      return best;
+    }
     // 3. schema.org JSON-LD
     const ld = eventsFromJsonLd(jsonLd);
     if (ld.length) return { events: ld, method: 'json-ld', source: pageUrl };
