@@ -3,6 +3,7 @@
 
 import { getCollection } from 'astro:content';
 import { todayLocal, type Event } from './events';
+import { parseRule, occurrences } from './rrule';
 
 const addDays = (d: string, n: number) => {
   const t = new Date(`${d}T00:00:00Z`);
@@ -11,6 +12,7 @@ const addDays = (d: string, n: number) => {
 };
 
 const TZ = 'America/Chicago';
+const WEEKS_AHEAD = 6; // same window as recurring.yaml runs
 
 export interface IcsEvent {
   uid?: string;
@@ -22,6 +24,8 @@ export interface IcsEvent {
   description?: string;
   rrule?: string;
   status?: string;
+  recurrence_id?: string; // date of the repeat this event edits (YYYY-MM-DD)
+  exdates?: string[]; // dates removed from a repeating event
 }
 
 const pad = (n: number | string) => String(n).padStart(2, '0');
@@ -71,6 +75,8 @@ export function parseIcs(text: string): IcsEvent[] {
     else if (key === 'RRULE') ev.rrule = value;
     else if (key === 'STATUS') ev.status = value.trim().toUpperCase();
     else if (key === 'DTSTART') Object.assign(ev, parseDt(value.trim()));
+    else if (key === 'RECURRENCE-ID') ev.recurrence_id = parseDt(value.trim())?.date;
+    else if (key === 'EXDATE') ev.exdates = [...(ev.exdates ?? []), ...value.split(',').map((v) => parseDt(v.trim())?.date).filter((d): d is string => !!d)];
   }
   return out;
 }
@@ -83,7 +89,8 @@ export function feedEvents() {
   cached ??= (async () => {
     const events: Event[] = [];
     const replaced = new Set<string>();
-    const oldest = addDays(todayLocal(), -30);
+    const today = todayLocal();
+    const oldest = addDays(today, -30);
     for (const { id: feedId, data: f } of await getCollection('feeds')) {
       try {
         const res = await fetch(f.url.replace(/^webcal:/, 'https:'));
@@ -91,11 +98,23 @@ export function feedEvents() {
         const parsed = parseIcs(await res.text());
         const used = new Set<string>();
         let kept = 0;
+        // Expand repeating events into dates (up to WEEKS_AHEAD out), leaving out dates that
+        // were cancelled (EXDATE) or edited, since an edited date is its own event in the feed.
+        const edited = new Set(parsed.filter((e) => e.recurrence_id).map((e) => `${e.uid}|${e.recurrence_id}`));
+        const horizon = addDays(today, WEEKS_AHEAD * 7);
+        const dated: IcsEvent[] = [];
+        let unsupported = 0;
         for (const e of parsed) {
+          if (!e.rrule) { dated.push(e); continue; }
+          const rule = parseRule(e.rrule, (raw) => parseDt(raw)?.date);
+          if (!rule) { unsupported++; continue; }
+          for (const date of occurrences(rule, e.date, oldest, horizon, new Set(e.exdates))) {
+            if (!edited.has(`${e.uid}|${date}`)) dated.push({ ...e, date });
+          }
+        }
+        for (const e of dated) {
           // Shared calendars (e.g. Google) carry years of history; skip anything long past.
-          // Repeating events aren't expanded, and their first date alone is misleading
-          // (e.g. a weekly "Hare TBD" placeholder), so leave them out.
-          if (e.status === 'CANCELLED' || e.date < oldest || e.rrule) continue;
+          if (e.status === 'CANCELLED' || e.date < oldest) continue;
           let id = `${e.date}-${feedId}-${slug(e.name)}`;
           for (let n = 2; used.has(id); n++) id = `${e.date}-${feedId}-${slug(e.name)}-${n}`;
           used.add(id);
@@ -117,8 +136,7 @@ export function feedEvents() {
             },
           });
         }
-        const repeating = parsed.filter((e) => e.rrule).length;
-        console.log(`[feeds] ${feedId}: ${kept} events${repeating ? ` (${repeating} repeating events skipped)` : ''}`);
+        console.log(`[feeds] ${feedId}: ${kept} events${unsupported ? ` (${unsupported} repeating events with an unsupported rule skipped)` : ''}`);
         if (kept && f.replaces) replaced.add(f.replaces);
       } catch (err) {
         console.warn(`[feeds] ${feedId} skipped: ${(err as Error).message}`);
