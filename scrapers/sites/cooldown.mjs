@@ -29,7 +29,8 @@ export async function scrape() {
       ...start,
       type: 'group-run',
       distances: ['1–3 mi'],
-      venue: [p.venue, d.addressString].filter(Boolean).join(', ') || 'TBA',
+      // "1401 West River Rd N, Minneapolis, MN 55411, USA" -> "1401 West River Rd N"
+      venue: [p.venue, d.addressString?.split(',')[0]].filter(Boolean).join(', ') || 'TBA',
       city: 'Minneapolis',
       host: 'Cooldown Running',
       url: `https://getpie.app/plans/${p.planId}`,
