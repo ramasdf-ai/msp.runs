@@ -109,7 +109,8 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, maxPages = 
       const url = res.url();
       const type = res.headers()['content-type'] ?? '';
       const req = res.request();
-      const entry = { url, status: res.status(), type, method: req.method(), post: req.postData()?.slice(0, 500) };
+      const entry = { url, status: res.status(), type, method: req.method(), post: req.postData() ?? undefined };
+      Object.defineProperty(entry, 'headers', { value: req.headers() }); // kept out of the debug log
       responses.push(entry);
       if (/text\/calendar/.test(type) || /\.ics(\?|$)/.test(url)) icsCandidates.add(url);
       if (/json|javascript/.test(type) && res.ok()) {
@@ -136,15 +137,14 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, maxPages = 
     const firstPage = responses.find((r) => r.json && eventsFromJson(r.json).length);
     if (firstPage) {
       for (let n = 2; n <= maxPages; n++) {
-        const next = await page.evaluate(async ({ url, method, post, n }) => {
-          let body = post;
-          let target = url;
-          if (post && /"page"\s*:\s*\d+/.test(post)) body = post.replace(/"page"\s*:\s*\d+/, `"page":${n}`);
-          else if (/[?&]page=\d+/.test(url)) target = url.replace(/([?&]page=)\d+/, `$1${n}`);
-          else return null;
-          const res = await fetch(target, { method, body, headers: body ? { 'content-type': 'application/json' } : {} });
-          return { url: target, status: res.status, json: res.ok ? await res.json() : undefined };
-        }, { url: firstPage.url, method: firstPage.method, post: firstPage.post, n }).catch((err) => ({ error: err.message }));
+        // Replay the widget's own request (same headers) outside the page, so CORS doesn't apply.
+        let { url: target, post: body } = firstPage;
+        if (body && /"page"\s*:\s*\d+/.test(body)) body = body.replace(/"page"\s*:\s*\d+/, `"page":${n}`);
+        else if (/[?&]page=\d+/.test(target)) target = target.replace(/([?&]page=)\d+/, `$1${n}`);
+        else break;
+        const next = await page.request.fetch(target, { method: firstPage.method, data: body, headers: firstPage.headers })
+          .then(async (res) => ({ url: target, status: res.status(), json: res.ok() ? await res.json() : undefined }))
+          .catch((err) => ({ error: err.message }));
         pageAttempts.push({ n, status: next?.status, error: next?.error, events: next?.json ? eventsFromJson(next.json).length : undefined, first: next?.json ? eventsFromJson(next.json)[0] : undefined });
         if (!next?.json) break;
         const before = new Set(responses.filter((r) => r.json).flatMap((r) => eventsFromJson(r.json)).map((e) => `${e.date}|${e.start_time}|${e.name}`));
@@ -168,7 +168,7 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, maxPages = 
       await writeFile(join(debugDir, 'page.html'), await page.content()).catch(() => {});
       await page.screenshot({ path: join(debugDir, 'screenshot.png'), fullPage: true }).catch(() => {});
       const frames = page.frames().map((f) => f.url()).filter((u) => u && u !== 'about:blank');
-      const net = responses.map(({ json, ...r }) => ({ ...r, ...(json ? { jsonEvents: eventsFromJson(json).length } : {}) }));
+      const net = responses.map(({ json, ...r }) => ({ ...r, post: r.post?.slice(0, 500), ...(json ? { jsonEvents: eventsFromJson(json).length } : {}) }));
       const buttons = await page.$$eval('button, [role="button"]', (els) => els.map((e) => (e.getAttribute('aria-label') || e.textContent || '').trim().slice(0, 40)).filter(Boolean)).catch(() => []);
       await writeFile(join(debugDir, 'network.json'), JSON.stringify({ frames, icsCandidates: [...icsCandidates], pagesFetched, pageAttempts, buttons, responses: net }, null, 2));
     }
