@@ -4,6 +4,7 @@
 import { getCollection } from 'astro:content';
 import { todayLocal, type Event } from './events';
 import { parseRule, occurrences } from './rrule';
+import { htmlToText, clip } from './html';
 
 const addDays = (d: string, n: number) => {
   const t = new Date(`${d}T00:00:00Z`);
@@ -67,11 +68,11 @@ export function parseIcs(text: string): IcsEvent[] {
     const m = line.match(/^([A-Z-]+)(?:;[^:]*)?:(.*)$/);
     if (!m) continue;
     const [, key, value] = m;
-    if (key === 'SUMMARY') ev.name = unesc(value);
-    else if (key === 'LOCATION') ev.venue = unesc(value) || undefined;
+    if (key === 'SUMMARY') ev.name = htmlToText(unesc(value));
+    else if (key === 'LOCATION') ev.venue = htmlToText(unesc(value)) || undefined;
     else if (key === 'URL') ev.url = value.trim();
     else if (key === 'UID') ev.uid = value.trim();
-    else if (key === 'DESCRIPTION') ev.description = unesc(value).slice(0, 600) || undefined;
+    else if (key === 'DESCRIPTION') ev.description = clip(htmlToText(unesc(value)), 600) || undefined;
     else if (key === 'RRULE') ev.rrule = value;
     else if (key === 'STATUS') ev.status = value.trim().toUpperCase();
     else if (key === 'DTSTART') Object.assign(ev, parseDt(value.trim()));
