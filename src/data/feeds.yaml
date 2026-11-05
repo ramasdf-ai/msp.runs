@@ -23,3 +23,12 @@
   price: Free first time, then $5–6
   link: https://minneapolish3.com/#calendar
   added: 2026-11-05
+
+# Missing Link Running's public Google Calendar (embedded at missinglinkrunning.com/calendar).
+# Coach-led runs and workouts; the regular schedule pauses over winter.
+- id: missing-link
+  url: https://calendar.google.com/calendar/ical/0sfsrf1s77lbu9dqmq1njcondo%40group.calendar.google.com/public/basic.ics
+  host: Missing Link Running
+  type: group-run
+  link: https://missinglinkrunning.com/calendar
+  added: 2026-11-05
