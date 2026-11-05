@@ -145,7 +145,7 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, maxPages = 
         const next = await page.request.fetch(target, { method: firstPage.method, data: body, headers: firstPage.headers })
           .then(async (res) => ({ url: target, status: res.status(), json: res.ok() ? await res.json() : undefined }))
           .catch((err) => ({ error: err.message }));
-        pageAttempts.push({ n, status: next?.status, error: next?.error, events: next?.json ? eventsFromJson(next.json).length : undefined, first: next?.json ? eventsFromJson(next.json)[0] : undefined });
+        pageAttempts.push({ n, status: next?.status, error: next?.error, events: next?.json ? eventsFromJson(next.json).length : undefined, first: next?.json ? eventsFromJson(next.json)[0]?.date : undefined });
         if (!next?.json) break;
         const before = new Set(responses.filter((r) => r.json).flatMap((r) => eventsFromJson(r.json)).map((e) => `${e.date}|${e.start_time}|${e.name}`));
         const fresh = eventsFromJson(next.json).filter((e) => !before.has(`${e.date}|${e.start_time}|${e.name}`));

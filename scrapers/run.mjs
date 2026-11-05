@@ -15,6 +15,7 @@ import { todayLocal } from './lib/dates.mjs';
 const here = dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = join(here, '..', 'src', 'data', 'scraped');
 const TIMEOUT_MS = 3 * 60 * 1000;
+const DAYS_AHEAD = 90;
 const inActions = !!process.env.GITHUB_ACTIONS;
 
 const warn = (title, msg) => console.log(inActions ? `::warning title=${title}::${msg}` : `WARN ${title}: ${msg}`);
@@ -40,11 +41,13 @@ async function runOne(file) {
   const label = `Scraper ${site.id}`;
   try {
     const { events, method, source } = await withTimeout(site.scrape({ debugDir }), TIMEOUT_MS);
-    const valid = events.filter((e) => e.name && isDate(e.date));
-    if (!valid.length) throw new Error(`found no events on ${site.url} (tried iCal, widget JSON, JSON-LD)`);
+    // Weekly runs can repeat for a year; the site only needs the next few months.
+    const today = todayLocal();
+    const horizon = new Date(Date.now() + (site.daysAhead ?? DAYS_AHEAD) * 864e5).toISOString().slice(0, 10);
+    const valid = events.filter((e) => e.name && isDate(e.date) && e.date >= today && e.date <= horizon);
+    if (!valid.length) throw new Error(`found no upcoming events on ${site.url} (tried iCal, widget JSON, JSON-LD)`);
 
     // Keep each event's "added" date from earlier runs so "Recently added" stays honest.
-    const today = todayLocal();
     const addedBefore = new Map((previous?.events ?? []).map((e) => [e.id, e.added]));
     const used = new Set();
     const out = valid

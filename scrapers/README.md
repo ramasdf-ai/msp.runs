@@ -16,7 +16,9 @@ reliable and needs no browser. The scraper says so in the build log if it finds 
 2. the JSON response that looks most like a list of events (what most widgets fetch),
 3. schema.org `Event` data in the page.
 
-Each site file in `sites/` maps those raw events to the site's fields (venue, host, type).
+If the widget's request has a `page` number (in the POST body or `?page=`), it asks for
+the following pages too. Each site file in `sites/` maps the raw events to the site's
+fields (venue, host, type). Only the next 90 days are kept (`daysAhead` per site).
 
 ## When a scraper breaks
 
