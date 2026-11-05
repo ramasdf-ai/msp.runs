@@ -4,11 +4,12 @@ import EventRow from '../components/EventRow.astro';
 import EventCard from '../components/EventCard.astro';
 import { upcomingEvents, recentlyAdded } from '../lib/events';
 import { getCollection } from 'astro:content';
-import { SITE, url } from '../lib/site';
+import { SITE, url, calendarLinks } from '../lib/site';
 
 const soon = (await upcomingEvents()).slice(0, 12);
 const recent = await recentlyAdded(3);
 const groups = await getCollection('groups');
+const cal = calendarLinks(Astro.site);
 ---
 <Base>
   <h1>Twin Cities Running Events</h1>
@@ -18,7 +19,11 @@ const groups = await getCollection('groups');
   </p>
   <ul class="nav">
     <li><a href={url('events')}>Upcoming events</a></li>
-    <li><a href={url('calendar.ics')}>Subscribe (calendar feed)</a></li>
+    <li>
+      Subscribe: <a href={cal.google} target="_blank" rel="noopener">Add to Google Calendar</a>
+      · <a href={cal.webcal}>Apple / Outlook</a>
+      · <a href={cal.ics}>.ics feed</a>
+    </li>
     <li><a href={url('groups')}>Local clubs and run groups</a></li>
     <li><a href={SITE.submitUrl} target="_blank" rel="noopener">Submit your event</a></li>
   </ul>
