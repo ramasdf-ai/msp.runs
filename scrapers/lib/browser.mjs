@@ -101,6 +101,7 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, maxPages = 
   const responses = [];
   const icsCandidates = new Set();
   let pagesFetched = 1;
+  const pageAttempts = [];
   try {
     const context = await browser.newContext({ userAgent: UA, timezoneId: 'America/Chicago', locale: 'en-US' });
     const page = await context.newPage();
@@ -142,9 +143,10 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, maxPages = 
           else if (/[?&]page=\d+/.test(url)) target = url.replace(/([?&]page=)\d+/, `$1${n}`);
           else return null;
           const res = await fetch(target, { method, body, headers: body ? { 'content-type': 'application/json' } : {} });
-          return res.ok ? { url: target, json: await res.json() } : null;
-        }, { url: firstPage.url, method: firstPage.method, post: firstPage.post, n }).catch(() => null);
-        if (!next) break;
+          return { url: target, status: res.status, json: res.ok ? await res.json() : undefined };
+        }, { url: firstPage.url, method: firstPage.method, post: firstPage.post, n }).catch((err) => ({ error: err.message }));
+        pageAttempts.push({ n, status: next?.status, error: next?.error, events: next?.json ? eventsFromJson(next.json).length : undefined, first: next?.json ? eventsFromJson(next.json)[0] : undefined });
+        if (!next?.json) break;
         const before = new Set(responses.filter((r) => r.json).flatMap((r) => eventsFromJson(r.json)).map((e) => `${e.date}|${e.start_time}|${e.name}`));
         const fresh = eventsFromJson(next.json).filter((e) => !before.has(`${e.date}|${e.start_time}|${e.name}`));
         if (!fresh.length) break;
@@ -168,7 +170,7 @@ export async function scrapePage(pageUrl, { debugDir, waitMs = 8000, maxPages = 
       const frames = page.frames().map((f) => f.url()).filter((u) => u && u !== 'about:blank');
       const net = responses.map(({ json, ...r }) => ({ ...r, ...(json ? { jsonEvents: eventsFromJson(json).length } : {}) }));
       const buttons = await page.$$eval('button, [role="button"]', (els) => els.map((e) => (e.getAttribute('aria-label') || e.textContent || '').trim().slice(0, 40)).filter(Boolean)).catch(() => []);
-      await writeFile(join(debugDir, 'network.json'), JSON.stringify({ frames, icsCandidates: [...icsCandidates], pagesFetched, buttons, responses: net }, null, 2));
+      await writeFile(join(debugDir, 'network.json'), JSON.stringify({ frames, icsCandidates: [...icsCandidates], pagesFetched, pageAttempts, buttons, responses: net }, null, 2));
     }
 
     // 1. iCal feed
