@@ -39,3 +39,11 @@
   type: group-run
   link: https://www.strava.com/clubs/MPRBruntheparks
   added: 2026-11-05
+
+# Northstar Running's site calendar (WordPress "The Events Calendar" iCal export).
+- id: northstar-running
+  url: https://www.northstarrunning.com/?post_type=tribe_events&ical=1&eventDisplay=list
+  host: Northstar Running
+  type: group-run
+  link: https://www.northstarrunning.com/events/
+  added: 2026-11-09
