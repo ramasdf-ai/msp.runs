@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { allEvents, fmtLongDay, fmtTime } from '../../lib/events';
 import { TYPE_LABEL, url } from '../../lib/site';
+import { linkParts } from '../../lib/html';
 
 export async function getStaticPaths() {
   return (await allEvents()).map((event) => ({ params: { id: event.id }, props: { event } }));
@@ -24,7 +25,9 @@ const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
     {e.distances.length > 0 && (<><dt>Distances</dt><dd>{e.distances.join(' / ')}</dd></>)}
     {e.price && (<><dt>Cost</dt><dd>{e.price}</dd></>)}
   </dl>
-  {e.description && <p>{e.description}</p>}
+  {e.description && (
+    <p class="desc">{linkParts(e.description).map((p) => p.href ? <a href={p.href} target="_blank" rel="noopener nofollow">{p.text}</a> : p.text)}</p>
+  )}
   {e.url && <p><a class="cta" href={e.url} target="_blank" rel="noopener">Details and registration →</a></p>}
 </Base>
 <style>
@@ -33,6 +36,7 @@ const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
   dl { display: grid; grid-template-columns: 6.5rem 1fr; gap: 0.5rem 1rem; margin: 1.5rem 0; }
   dt { color: var(--muted); }
   dd { margin: 0; }
+  .desc { white-space: pre-line; overflow-wrap: anywhere; }
   .cta {
     display: inline-block; padding: 0.6rem 1rem; border-radius: 8px;
     background: var(--accent); color: #fff; text-decoration: none; font-weight: 600;
