@@ -4,32 +4,6 @@
   "from": "https://mahina.app/app/bypupu-1r.myshopify.com",
   "events": [
     {
-      "id": "2026-11-06-mill-city-fresh-coffee-friday-northeast",
-      "name": "Fresh Coffee Friday @ Northeast",
-      "date": "2026-11-06",
-      "start_time": "06:30",
-      "type": "group-run",
-      "venue": "411 E Hennepin Ave (Mill City Running Northeast)",
-      "city": "Minneapolis",
-      "host": "Mill City Running",
-      "url": "https://www.millcityrunning.com/pages/calendar",
-      "description": "Early bird gets the miles. What started as a dozen runners getting together in 2013 has become an iconic weekend warmup in Minneapolis. With route options of 2, 4, 5, or 7 miles, you'll share miles with a variety of experience levels and pace preferences. Our 6:30 am Friday run happens every week, all year long, featuring fountains and fountains of fresh coffee. Are you an overachiever looking for some extra credit? Sign the one-time waiver before your first run. Find the routes and FAQs here.",
-      "added": "2026-11-05"
-    },
-    {
-      "id": "2026-11-07-mill-city-assisted-long-run-highland",
-      "name": "Assisted Long Run @ Highland",
-      "date": "2026-11-07",
-      "start_time": "08:00",
-      "type": "group-run",
-      "venue": "767 Cleveland Ave S (Mill City Running Highland)",
-      "city": "St. Paul",
-      "host": "Mill City Running",
-      "url": "https://www.millcityrunning.com/pages/calendar",
-      "description": "Our Assisted Long Run is hosted about every other week (ok…twice a month) and includes pre-mapped routes ranging from 6-20 miles. Along the course you’ll find multiple aid stations where runners have the opportunity to hydrate and refuel. We update the start time to match the daylight during the seasons. ALRs start at 7:00AM from May through September, and 8:00AM from October through April. Routes can be found here (closer to the date).",
-      "added": "2026-11-05"
-    },
-    {
       "id": "2026-11-09-mill-city-highland-community-run",
       "name": "Highland Community Run",
       "date": "2026-11-09",
