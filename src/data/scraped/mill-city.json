@@ -4,19 +4,6 @@
   "from": "https://mahina.app/app/bypupu-1r.myshopify.com",
   "events": [
     {
-      "id": "2026-11-10-mill-city-northeast-community-run",
-      "name": "Northeast Community Run",
-      "date": "2026-11-10",
-      "start_time": "18:00",
-      "type": "group-run",
-      "venue": "411 E Hennepin Ave (Mill City Running Northeast)",
-      "city": "Minneapolis",
-      "host": "Mill City Running",
-      "url": "https://www.millcityrunning.com/pages/calendar",
-      "description": "Grab a friend and drop in on the most social run in Minneapolis. Our weekly Tuesday run takes you through the historic Marcy-Holmes neighborhood and Minneapolis Parks System with 2, 4, 5, and 7 mile loops. Like all of our runs you’ll find a variety of paces from sub-7 minute miles to over 13 minutes per mile and walkers (we promise, someone is moving your pace). Looking for a little extra credit? Save time at check-in by signing the one-time waiver before your first run. Check out the routes and FAQs here.",
-      "added": "2026-11-05"
-    },
-    {
       "id": "2026-11-12-mill-city-bipoc-community-run-highland",
       "name": "BIPOC Community Run @ Highland",
       "date": "2026-11-12",
