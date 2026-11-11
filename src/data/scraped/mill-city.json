@@ -56,17 +56,17 @@
       "added": "2026-11-05"
     },
     {
-      "id": "2026-11-17-mill-city-northeast-community-run",
-      "name": "Northeast Community Run",
+      "id": "2026-11-17-mill-city-brooks-demo-run-northeast",
+      "name": "BROOKS Demo Run @ Northeast",
       "date": "2026-11-17",
       "start_time": "18:00",
-      "type": "group-run",
+      "type": "social",
       "venue": "411 E Hennepin Ave (Mill City Running Northeast)",
       "city": "Minneapolis",
       "host": "Mill City Running",
       "url": "https://www.millcityrunning.com/pages/calendar",
-      "description": "Grab a friend and drop in on the most social run in Minneapolis. Our weekly Tuesday run takes you through the historic Marcy-Holmes neighborhood and Minneapolis Parks System with 2, 4, 5, and 7 mile loops. Like all of our runs you’ll find a variety of paces from sub-7 minute miles to over 13 minutes per mile and walkers (we promise, someone is moving your pace). Looking for a little extra credit? Save time at check-in by signing the one-time waiver before your first run. Check out the routes and FAQs here.",
-      "added": "2026-11-05"
+      "description": "Grab a friend and drop in on the most social run in Minneapolis, this week with free demo shoes from Brooks Running (and a special surprise after the run)! Our weekly Tuesday run takes you through the historic Marcy-Holmes neighborhood and Minneapolis Parks System with 2, 4, 5, and 7 mile loops. Like all of our runs you’ll find a variety of paces from sub-7 minute miles to over 13 minutes per mile and walkers (we promise, someone is moving your pace). Looking for a little extra credit? Save time at check-in by signing the one-time waiver before your first run. Check out the routes and FAQs her",
+      "added": "2026-11-10"
     },
     {
       "id": "2026-11-20-mill-city-fresh-coffee-friday-northeast",
@@ -91,7 +91,7 @@
       "city": "Minneapolis",
       "host": "Mill City Running",
       "url": "https://www.millcityrunning.com/pages/calendar",
-      "description": "Our Assisted Long Run is hosted about every other week (ok…twice a month) and includes pre-mapped routes ranging from 6-20 miles. Along the course you’ll find multiple aid stations where runners have the opportunity to hydrate and refuel. We update the start time to match the daylight during the seasons. ALRs start at 7:00AM from May through September, and 8:00AM from October through April. Routes can be found here (closer to the date).",
+      "description": "Our Assisted Long Run is hosted about every other week (ok…twice a month) and includes pre-mapped routes ranging from 6-20 miles. Along the course you’ll find multiple aid stations where runners have the opportunity to hydrate and refuel. We update the start time to match the daylight during the seasons. ALRs start at 7:00AM from May through September, and 8:00AM from October through April. Routes can be found here .",
       "added": "2026-11-05"
     },
     {
@@ -483,6 +483,19 @@
       "url": "https://www.millcityrunning.com/pages/calendar",
       "description": "Bringing the party to Saint Paul. Join us every Monday night in Highland Park for a free community run. Choose from routes ranging from 2–7 miles, with pace groups for everyone—from sub-7-minute miles to 13+ minute miles, plus a welcoming walking crew. Every other week we rotate between two route options, and Team Northbound vs. Team Southbound remains one of the shop's most hotly debated rivalries. Looking for a little extra credit? Save time at check-in by signing the one-time waiver before your first run. Check out the routes and FAQs here.",
       "added": "2026-11-09"
+    },
+    {
+      "id": "2027-02-09-mill-city-northeast-community-run",
+      "name": "Northeast Community Run",
+      "date": "2027-02-09",
+      "start_time": "18:00",
+      "type": "group-run",
+      "venue": "411 E Hennepin Ave (Mill City Running Northeast)",
+      "city": "Minneapolis",
+      "host": "Mill City Running",
+      "url": "https://www.millcityrunning.com/pages/calendar",
+      "description": "Grab a friend and drop in on the most social run in Minneapolis. Our weekly Tuesday run takes you through the historic Marcy-Holmes neighborhood and Minneapolis Parks System with 2, 4, 5, and 7 mile loops. Like all of our runs you’ll find a variety of paces from sub-7 minute miles to over 13 minutes per mile and walkers (we promise, someone is moving your pace). Looking for a little extra credit? Save time at check-in by signing the one-time waiver before your first run. Check out the routes and FAQs here.",
+      "added": "2026-11-10"
     }
   ]
 }
