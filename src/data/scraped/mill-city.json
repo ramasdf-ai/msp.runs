@@ -4,19 +4,6 @@
   "from": "https://mahina.app/app/bypupu-1r.myshopify.com",
   "events": [
     {
-      "id": "2026-11-12-mill-city-bipoc-community-run-highland",
-      "name": "BIPOC Community Run @ Highland",
-      "date": "2026-11-12",
-      "start_time": "18:00",
-      "type": "group-run",
-      "venue": "767 Cleveland Ave S (Mill City Running Highland)",
-      "city": "St. Paul",
-      "host": "Mill City Running",
-      "url": "https://www.millcityrunning.com/pages/calendar",
-      "description": "Bringing more diversity to the sport we love: this monthly meetup is for members of the community who are Black, Indigenous, and/or People of Color (BIPOC). Just like all our runs this is free and will offer 2, 3, 4.5, and 7 mile options. Pace groups will represent all speeds and have designated leaders to guide you along the route. All BIPOC movers are welcome! This run is held on the second Thursday of each month, beginning at 6pm. We alternate between Northeast (even months) and Highland (odd months). Created and led by BIPOC members of the Mill City staff. FINE PRINT! Is this your first gr",
-      "added": "2026-11-05"
-    },
-    {
       "id": "2026-11-13-mill-city-flapjack-friday-northeast",
       "name": "Flapjack Friday @ Northeast",
       "date": "2026-11-13",
@@ -483,6 +470,19 @@
       "url": "https://www.millcityrunning.com/pages/calendar",
       "description": "Grab a friend and drop in on the most social run in Minneapolis. Our weekly Tuesday run takes you through the historic Marcy-Holmes neighborhood and Minneapolis Parks System with 2, 4, 5, and 7 mile loops. Like all of our runs you’ll find a variety of paces from sub-7 minute miles to over 13 minutes per mile and walkers (we promise, someone is moving your pace). Looking for a little extra credit? Save time at check-in by signing the one-time waiver before your first run. Check out the routes and FAQs here.",
       "added": "2026-11-10"
+    },
+    {
+      "id": "2027-02-11-mill-city-bipoc-community-run-northeast",
+      "name": "BIPOC Community Run @ Northeast",
+      "date": "2027-02-11",
+      "start_time": "18:00",
+      "type": "group-run",
+      "venue": "411 E Hennepin Ave (Mill City Running Northeast)",
+      "city": "Minneapolis",
+      "host": "Mill City Running",
+      "url": "https://www.millcityrunning.com/pages/calendar",
+      "description": "Bringing more diversity to the sport we love: this monthly meetup is for members of the community who are Black, Indigenous, and/or People of Color (BIPOC). Just like all our runs this is free and will offer 2, 3, 4.5, and 7 mile options. Pace groups will represent all speeds and have designated leaders to guide you along the route. All BIPOC movers are welcome! This run is held on the second Thursday of each month, beginning at 6pm. We alternate between Northeast (even months) and Highland (odd months). Created and led by BIPOC members of the Mill City staff. FINE PRINT! Is this your first gr",
+      "added": "2026-11-13"
     }
   ]
 }
