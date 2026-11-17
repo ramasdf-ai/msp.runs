@@ -4,19 +4,6 @@
   "from": "https://mahina.app/app/bypupu-1r.myshopify.com",
   "events": [
     {
-      "id": "2026-11-16-mill-city-highland-community-run",
-      "name": "Highland Community Run",
-      "date": "2026-11-16",
-      "start_time": "18:00",
-      "type": "group-run",
-      "venue": "767 Cleveland Ave S (Mill City Running Highland)",
-      "city": "St. Paul",
-      "host": "Mill City Running",
-      "url": "https://www.millcityrunning.com/pages/calendar",
-      "description": "Bringing the party to Saint Paul. Join us every Monday night in Highland Park for a free community run. Choose from routes ranging from 2–7 miles, with pace groups for everyone—from sub-7-minute miles to 13+ minute miles, plus a welcoming walking crew. Every other week we rotate between two route options, and Team Northbound vs. Team Southbound remains one of the shop's most hotly debated rivalries. Looking for a little extra credit? Save time at check-in by signing the one-time waiver before your first run. Check out the routes and FAQs here.",
-      "added": "2026-11-05"
-    },
-    {
       "id": "2026-11-17-mill-city-brooks-demo-run-northeast",
       "name": "BROOKS Demo Run @ Northeast",
       "date": "2026-11-17",
@@ -470,6 +457,19 @@
       "url": "https://www.millcityrunning.com/pages/calendar",
       "description": "Bringing more diversity to the sport we love: this monthly meetup is for members of the community who are Black, Indigenous, and/or People of Color (BIPOC). Just like all our runs this is free and will offer 2, 3, 4.5, and 7 mile options. Pace groups will represent all speeds and have designated leaders to guide you along the route. All BIPOC movers are welcome! This run is held on the second Thursday of each month, beginning at 6pm. We alternate between Northeast (even months) and Highland (odd months). Created and led by BIPOC members of the Mill City staff. FINE PRINT! Is this your first gr",
       "added": "2026-11-13"
+    },
+    {
+      "id": "2027-02-15-mill-city-highland-community-run",
+      "name": "Highland Community Run",
+      "date": "2027-02-15",
+      "start_time": "18:00",
+      "type": "group-run",
+      "venue": "767 Cleveland Ave S (Mill City Running Highland)",
+      "city": "St. Paul",
+      "host": "Mill City Running",
+      "url": "https://www.millcityrunning.com/pages/calendar",
+      "description": "Bringing the party to Saint Paul. Join us every Monday night in Highland Park for a free community run. Choose from routes ranging from 2–7 miles, with pace groups for everyone—from sub-7-minute miles to 13+ minute miles, plus a welcoming walking crew. Every other week we rotate between two route options, and Team Northbound vs. Team Southbound remains one of the shop's most hotly debated rivalries. Looking for a little extra credit? Save time at check-in by signing the one-time waiver before your first run. Check out the routes and FAQs here.",
+      "added": "2026-11-16"
     }
   ]
 }
