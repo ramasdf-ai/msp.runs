@@ -4,19 +4,6 @@
   "from": "https://mahina.app/app/bypupu-1r.myshopify.com",
   "events": [
     {
-      "id": "2026-11-17-mill-city-brooks-demo-run-northeast",
-      "name": "BROOKS Demo Run @ Northeast",
-      "date": "2026-11-17",
-      "start_time": "18:00",
-      "type": "social",
-      "venue": "411 E Hennepin Ave (Mill City Running Northeast)",
-      "city": "Minneapolis",
-      "host": "Mill City Running",
-      "url": "https://www.millcityrunning.com/pages/calendar",
-      "description": "Grab a friend and drop in on the most social run in Minneapolis, this week with free demo shoes from Brooks Running (and a special surprise after the run)! Our weekly Tuesday run takes you through the historic Marcy-Holmes neighborhood and Minneapolis Parks System with 2, 4, 5, and 7 mile loops. Like all of our runs you’ll find a variety of paces from sub-7 minute miles to over 13 minutes per mile and walkers (we promise, someone is moving your pace). Looking for a little extra credit? Save time at check-in by signing the one-time waiver before your first run. Check out the routes and FAQs her",
-      "added": "2026-11-10"
-    },
-    {
       "id": "2026-11-20-mill-city-fresh-coffee-friday-northeast",
       "name": "Fresh Coffee Friday @ Northeast",
       "date": "2026-11-20",
