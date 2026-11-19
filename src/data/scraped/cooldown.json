@@ -4,6 +4,23 @@
   "from": "https://plans-service.getpie.app/api/public/v2/plans/community/01a06922-325d-711a-83c0-cde8d5d89d04",
   "events": [
     {
+      "id": "2026-11-23-cooldown-cooldown-friendsgiving",
+      "name": "Cooldown Friendsgiving",
+      "date": "2026-11-23",
+      "start_time": "18:00",
+      "type": "group-run",
+      "distances": [
+        "1–3 mi"
+      ],
+      "venue": "Pryes Brewing Company, 1401 West River Rd N",
+      "city": "Minneapolis",
+      "host": "Cooldown Running",
+      "url": "https://getpie.app/plans/ebf369bb-5c12-4129-adf4-eceecbbbb510",
+      "price": "Free",
+      "description": "Walk, run, or jog 1–3 miles. All ability levels welcome. RSVP on Pie.",
+      "added": "2026-11-19"
+    },
+    {
       "id": "2026-11-23-cooldown-minneapolis-walk-run-club",
       "name": "Minneapolis Walk / Run Club",
       "date": "2026-11-23",
