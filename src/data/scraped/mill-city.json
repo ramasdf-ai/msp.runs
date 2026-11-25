@@ -4,19 +4,6 @@
   "from": "https://mahina.app/app/bypupu-1r.myshopify.com",
   "events": [
     {
-      "id": "2026-11-24-mill-city-northeast-community-run",
-      "name": "Northeast Community Run",
-      "date": "2026-11-24",
-      "start_time": "18:00",
-      "type": "group-run",
-      "venue": "411 E Hennepin Ave (Mill City Running Northeast)",
-      "city": "Minneapolis",
-      "host": "Mill City Running",
-      "url": "https://www.millcityrunning.com/pages/calendar",
-      "description": "Grab a friend and drop in on the most social run in Minneapolis. Our weekly Tuesday run takes you through the historic Marcy-Holmes neighborhood and Minneapolis Parks System with 2, 4, 5, and 7 mile loops. Like all of our runs you’ll find a variety of paces from sub-7 minute miles to over 13 minutes per mile and walkers (we promise, someone is moving your pace). Looking for a little extra credit? Save time at check-in by signing the one-time waiver before your first run. Check out the routes and FAQs here.",
-      "added": "2026-11-05"
-    },
-    {
       "id": "2026-11-27-mill-city-fresh-coffee-friday-northeast",
       "name": "Fresh Coffee Friday @ Northeast",
       "date": "2026-11-27",
@@ -121,8 +108,8 @@
       "added": "2026-11-05"
     },
     {
-      "id": "2026-12-11-mill-city-fresh-coffee-friday-northeast",
-      "name": "Fresh Coffee Friday @ Northeast",
+      "id": "2026-12-11-mill-city-winter-flaps-with-altra-northeast",
+      "name": "Winter Flaps with Altra @ Northeast",
       "date": "2026-12-11",
       "start_time": "06:30",
       "type": "group-run",
@@ -130,8 +117,8 @@
       "city": "Minneapolis",
       "host": "Mill City Running",
       "url": "https://www.millcityrunning.com/pages/calendar",
-      "description": "Early bird gets the miles. What started as a dozen runners getting together in 2013 has become an iconic weekend warmup in Minneapolis. With route options of 2, 4, 5, or 7 miles, you'll share miles with a variety of experience levels and pace preferences. Our 6:30 am Friday run happens every week, all year long, featuring fountains and fountains of fresh coffee. Are you an overachiever looking for some extra credit? Sign the one-time waiver before your first run. Find the routes and FAQs here.",
-      "added": "2026-11-05"
+      "description": "Early bird gets the miles. What started as a dozen runners getting together in 2013 has become an iconic weekend warmup in Minneapolis. With route options of 2, 4, 5, or 7 miles, you'll share miles with a variety of experience levels and pace preferences. Our 6:30 am Friday run happens every week, all year long, always featuring fountains and fountains of fresh coffee. This week is extra special because our friends from Altra are feeding us with the fan favorite: CROFFLES! Croffle Corner will be serving the elusive croissant-waffle hybrid that our runners salivate over. Are you an overachiever",
+      "added": "2026-11-24"
     },
     {
       "id": "2026-12-14-mill-city-highland-community-run",
@@ -171,6 +158,19 @@
       "url": "https://www.millcityrunning.com/pages/calendar",
       "description": "Early bird gets the miles. What started as a dozen runners getting together in 2013 has become an iconic weekend warmup in Minneapolis. With route options of 2, 4, 5, or 7 miles, you'll share miles with a variety of experience levels and pace preferences. Our 6:30 am Friday run happens every week, all year long, featuring fountains and fountains of fresh coffee. Are you an overachiever looking for some extra credit? Sign the one-time waiver before your first run. Find the routes and FAQs here.",
       "added": "2026-11-05"
+    },
+    {
+      "id": "2026-12-19-mill-city-assisted-long-run-northeast",
+      "name": "Assisted Long Run @ Northeast",
+      "date": "2026-12-19",
+      "start_time": "08:00",
+      "type": "group-run",
+      "venue": "411 E Hennepin Ave (Mill City Running Northeast)",
+      "city": "Minneapolis",
+      "host": "Mill City Running",
+      "url": "https://www.millcityrunning.com/pages/calendar",
+      "description": "Our Assisted Long Run is hosted about every other week (ok…twice a month) and includes pre-mapped routes ranging from 6-20 miles. Along the course you’ll find multiple aid stations where runners have the opportunity to hydrate and refuel. We update the start time to match the daylight during the seasons. ALRs start at 7:00AM from May through September, and 8:00AM from October through April. Routes can be found here .",
+      "added": "2026-11-24"
     },
     {
       "id": "2026-12-21-mill-city-highland-community-run",
@@ -251,6 +251,19 @@
       "added": "2026-11-05"
     },
     {
+      "id": "2027-01-08-mill-city-fresh-coffee-friday-northeast",
+      "name": "Fresh Coffee Friday @ Northeast",
+      "date": "2027-01-08",
+      "start_time": "06:30",
+      "type": "group-run",
+      "venue": "411 E Hennepin Ave (Mill City Running Northeast)",
+      "city": "Minneapolis",
+      "host": "Mill City Running",
+      "url": "https://www.millcityrunning.com/pages/calendar",
+      "description": "Early bird gets the miles. What started as a dozen runners getting together in 2013 has become an iconic weekend warmup in Minneapolis. With route options of 2, 4, 5, or 7 miles, you'll share miles with a variety of experience levels and pace preferences. Our 6:30 am Friday run happens every week, all year long, featuring fountains and fountains of fresh coffee. Are you an overachiever looking for some extra credit? Sign the one-time waiver before your first run. Find the routes and FAQs here.",
+      "added": "2026-11-24"
+    },
+    {
       "id": "2027-01-11-mill-city-highland-community-run",
       "name": "Highland Community Run",
       "date": "2027-01-11",
@@ -290,6 +303,19 @@
       "added": "2026-11-05"
     },
     {
+      "id": "2027-01-15-mill-city-fresh-coffee-friday-northeast",
+      "name": "Fresh Coffee Friday @ Northeast",
+      "date": "2027-01-15",
+      "start_time": "06:30",
+      "type": "group-run",
+      "venue": "411 E Hennepin Ave (Mill City Running Northeast)",
+      "city": "Minneapolis",
+      "host": "Mill City Running",
+      "url": "https://www.millcityrunning.com/pages/calendar",
+      "description": "Early bird gets the miles. What started as a dozen runners getting together in 2013 has become an iconic weekend warmup in Minneapolis. With route options of 2, 4, 5, or 7 miles, you'll share miles with a variety of experience levels and pace preferences. Our 6:30 am Friday run happens every week, all year long, featuring fountains and fountains of fresh coffee. Are you an overachiever looking for some extra credit? Sign the one-time waiver before your first run. Find the routes and FAQs here.",
+      "added": "2026-11-24"
+    },
+    {
       "id": "2027-01-18-mill-city-highland-community-run",
       "name": "Highland Community Run",
       "date": "2027-01-18",
@@ -314,6 +340,19 @@
       "url": "https://www.millcityrunning.com/pages/calendar",
       "description": "Grab a friend and drop in on the most social run in Minneapolis. Our weekly Tuesday run takes you through the historic Marcy-Holmes neighborhood and Minneapolis Parks System with 2, 4, 5, and 7 mile loops. Like all of our runs you’ll find a variety of paces from sub-7 minute miles to over 13 minutes per mile and walkers (we promise, someone is moving your pace). Looking for a little extra credit? Save time at check-in by signing the one-time waiver before your first run. Check out the routes and FAQs here.",
       "added": "2026-11-05"
+    },
+    {
+      "id": "2027-01-22-mill-city-fresh-coffee-friday-northeast",
+      "name": "Fresh Coffee Friday @ Northeast",
+      "date": "2027-01-22",
+      "start_time": "06:30",
+      "type": "group-run",
+      "venue": "411 E Hennepin Ave (Mill City Running Northeast)",
+      "city": "Minneapolis",
+      "host": "Mill City Running",
+      "url": "https://www.millcityrunning.com/pages/calendar",
+      "description": "Early bird gets the miles. What started as a dozen runners getting together in 2013 has become an iconic weekend warmup in Minneapolis. With route options of 2, 4, 5, or 7 miles, you'll share miles with a variety of experience levels and pace preferences. Our 6:30 am Friday run happens every week, all year long, featuring fountains and fountains of fresh coffee. Are you an overachiever looking for some extra credit? Sign the one-time waiver before your first run. Find the routes and FAQs here.",
+      "added": "2026-11-24"
     },
     {
       "id": "2027-01-25-mill-city-highland-community-run",
@@ -444,6 +483,19 @@
       "url": "https://www.millcityrunning.com/pages/calendar",
       "description": "Bringing the party to Saint Paul. Join us every Monday night in Highland Park for a free community run. Choose from routes ranging from 2–7 miles, with pace groups for everyone—from sub-7-minute miles to 13+ minute miles, plus a welcoming walking crew. Every other week we rotate between two route options, and Team Northbound vs. Team Southbound remains one of the shop's most hotly debated rivalries. Looking for a little extra credit? Save time at check-in by signing the one-time waiver before your first run. Check out the routes and FAQs here.",
       "added": "2026-11-23"
+    },
+    {
+      "id": "2027-02-23-mill-city-northeast-community-run",
+      "name": "Northeast Community Run",
+      "date": "2027-02-23",
+      "start_time": "18:00",
+      "type": "group-run",
+      "venue": "411 E Hennepin Ave (Mill City Running Northeast)",
+      "city": "Minneapolis",
+      "host": "Mill City Running",
+      "url": "https://www.millcityrunning.com/pages/calendar",
+      "description": "Grab a friend and drop in on the most social run in Minneapolis. Our weekly Tuesday run takes you through the historic Marcy-Holmes neighborhood and Minneapolis Parks System with 2, 4, 5, and 7 mile loops. Like all of our runs you’ll find a variety of paces from sub-7 minute miles to over 13 minutes per mile and walkers (we promise, someone is moving your pace). Looking for a little extra credit? Save time at check-in by signing the one-time waiver before your first run. Check out the routes and FAQs here.",
+      "added": "2026-11-24"
     }
   ]
 }
